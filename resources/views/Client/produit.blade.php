@@ -438,6 +438,7 @@
                 <!-- Products Grid -->
                 <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
                     <!-- Product 1 -->
+                    @foreach($produits as $produit)
                     <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-vue">
                         <div class="card product-card h-100 shadow-sm">
                             <span class="badge bg-primary product-badge">Nouveau</span>
@@ -458,151 +459,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Product 2 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-vue">
-                        <div class="card product-card h-100 shadow-sm">
-                            <img src="{{ asset('assets/masonry-portfolio/' . '2.jpg') }}" class="card-img-top"
-                                alt="Lunettes de vue modèle Élégance">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lunettes de Vue</p>
-                                <h5 class="card-title fw-bold">Élégance Pro</h5>
-                                <p class="card-text">Monture légère en titane avec design minimaliste, parfaite pour un
-                                    usage professionnel quotidien.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span>850 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-soleil">
-                        <div class="card product-card h-100 shadow-sm">
-                            <span class="badge bg-danger product-badge">Promo</span>
-                            <img src="{{ asset('assets/masonry-portfolio/' . '3.jpg') }}" class="card-img-top"
-                                alt="Lunettes de soleil modèle Urban">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lunettes de Soleil</p>
-                                <h5 class="card-title fw-bold">Urban Style</h5>
-                                <p class="card-text">Lunettes de soleil tendance avec protection UV400 et verres
-                                    polarisés pour une vision claire et nette.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span class="old-price">950 DH</span>
-                                        <span>750 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-soleil">
-                        <div class="card product-card h-100 shadow-sm">
-                            <img src="{{ asset('assets/masonry-portfolio/' . '4.jpg') }}" class="card-img-top"
-                                alt="Lunettes de soleil modèle Sport">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lunettes de Soleil</p>
-                                <h5 class="card-title fw-bold">Sport Pro</h5>
-                                <p class="card-text">Conçues pour les activités sportives, ces lunettes offrent une
-                                    excellente adhérence et une protection optimale.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span>890 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lentilles">
-                        <div class="card product-card h-100 shadow-sm">
-                            <img src="{{ asset('assets/masonry-portfolio/' . '5.jpg') }}" class="card-img-top"
-                                alt="Lentilles journalières">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lentilles de Contact</p>
-                                <h5 class="card-title fw-bold">Daily Comfort</h5>
-                                <p class="card-text">Lentilles journalières ultra-confortables avec hydratation longue
-                                    durée. Boîte de 30 paires.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span>350 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 6 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lentilles">
-                        <div class="card product-card h-100 shadow-sm">
-                            <span class="badge bg-primary product-badge">Nouveau</span>
-                            <img src="{{ asset('assets/masonry-portfolio/' . '6.jpg') }}" class="card-img-top"
-                                alt="Lentilles mensuelles">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lentilles de Contact</p>
-                                <h5 class="card-title fw-bold">Monthly Elite</h5>
-                                <p class="card-text">Lentilles mensuelles avec technologie avancée pour une respiration
-                                    optimale de la cornée. Boîte de 3 paires.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span>450 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 7 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item accessoires">
-                        <div class="card product-card h-100 shadow-sm">
-                            <img src="{{ asset('assets/masonry-portfolio/' . '7.jpg') }}" class="card-img-top"
-                                alt="Étui à lunettes">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Accessoires</p>
-                                <h5 class="card-title fw-bold">Étui Premium</h5>
-                                <p class="card-text">Étui rigide en cuir véritable avec intérieur en microfibre pour
-                                    protéger vos lunettes des rayures.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span>180 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 8 -->
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item accessoires">
-                        <div class="card product-card h-100 shadow-sm">
-                            <span class="badge bg-danger product-badge">Promo</span>
-                            <img src="{{ asset('assets/masonry-portfolio/' . '8.jpg') }}" class="card-img-top"
-                                alt="Kit de nettoyage">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Accessoires</p>
-                                <h5 class="card-title fw-bold">Kit de Nettoyage Complet</h5>
-                                <p class="card-text">Ensemble complet avec spray nettoyant, chiffon en microfibre et
-                                    brosse pour un entretien optimal de vos lunettes.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span class="old-price">120 DH</span>
-                                        <span>90 DH</span>
-                                    </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+                    
                 </div>
 
                 <!-- Pagination -->

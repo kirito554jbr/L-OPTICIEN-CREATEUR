@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +37,27 @@ Route::get('/produitAdmin', function () {
     return view('Admin.produit');
 });
 
-Route::get('/register', function () {
+Route::get('/Toregister', function () {
     return view('auth.register');
+})->name('Toregister');
+
+Route::get('/Tologin', function () {
+    return view('auth.login');
+})->name('Tologin');
+
+
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register')->name('register');
+    Route::post('/login', 'login')->name('login');
+    Route::post('/logout', 'logout')->name('logout');
+});
+
+
+Route::get('/role/create', [RoleController::class, 'create']);
+
+Route::controller(ProduitController::class)->group(function () {
+    Route::get('/produitAdmin', 'index')->name('produitAdmin');
+    Route::post('/produitAdmin/create', 'create')->name('produit.create');
+    Route::put('/produitAdmin/update/{id}', 'update')->name('produit.update');
+    Route::delete('/produitAdmin/delete/{id}', 'delete')->name('produit.delete');
 });

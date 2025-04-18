@@ -437,18 +437,19 @@
                 <div class="col-lg-6">
                   <div class="card-body">
                     <h2 class="text-center mb-4 fw-bold">Créer un compte</h2>
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" action="/register" method="POST" novalidate>
+                      @CSRF
                       <div class="row g-3">
                         <div class="col-md-6">
                           <label for="firstName" class="form-label">Prénom</label>
-                          <input type="text" class="form-control" id="firstName" placeholder="Prénom" required>
+                          <input type="text" class="form-control" id="firstName" name="lastName" placeholder="Prénom" required>
                           <div class="invalid-feedback">
                             Veuillez entrer votre prénom.
                           </div>
                         </div>
                         <div class="col-md-6">
                           <label for="lastName" class="form-label">Nom</label>
-                          <input type="text" class="form-control" id="lastName" placeholder="Nom" required>
+                          <input type="text" class="form-control" id="lastName" name="firstName" placeholder="Nom" required>
                           <div class="invalid-feedback">
                             Veuillez entrer votre nom.
                           </div>
@@ -461,7 +462,7 @@
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-envelope"></i>
                           </span>
-                          <input type="email" class="form-control bg-light border-start-0" id="email" placeholder="Entrez votre email" required>
+                          <input type="email" class="form-control bg-light border-start-0" id="email" name="email" placeholder="Entrez votre email" required>
                           <div class="invalid-feedback">
                             Veuillez entrer une adresse email valide.
                           </div>
@@ -474,7 +475,7 @@
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-phone"></i>
                           </span>
-                          <input type="tel" class="form-control bg-light border-start-0" id="phone" placeholder="Entrez votre numéro de téléphone" required>
+                          <input type="tel" class="form-control bg-light border-start-0" id="phone" name="phone" placeholder="Entrez votre numéro de téléphone" required>
                           <div class="invalid-feedback">
                             Veuillez entrer un numéro de téléphone valide.
                           </div>
@@ -487,7 +488,7 @@
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-lock"></i>
                           </span>
-                          <input type="password" class="form-control bg-light border-start-0" id="password" placeholder="Créez un mot de passe" required>
+                          <input type="password" class="form-control bg-light border-start-0" id="password" name="password" placeholder="Créez un mot de passe" required>
                           <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
                             <i class="bi bi-eye"></i>
                           </button>
@@ -507,7 +508,7 @@
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-lock-fill"></i>
                           </span>
-                          <input type="password" class="form-control bg-light border-start-0" id="confirmPassword" placeholder="Confirmez votre mot de passe" required>
+                          <input type="password" class="form-control bg-light border-start-0" id="confirmPassword" name="passwordConfirmation" placeholder="Confirmez votre mot de passe" required>
                           <div class="invalid-feedback">
                             Les mots de passe ne correspondent pas.
                           </div>

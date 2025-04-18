@@ -595,6 +595,7 @@
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach($produits as $produit)
                   <tr>
                     <td>
                       <div class="form-check">
@@ -627,225 +628,7 @@
                       </button>
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/masonry-portfolio/2.jpg" alt="Élégance Pro">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Élégance Pro</div>
-                      <div class="small text-muted">SKU: LV-002</div>
-                    </td>
-                    <td>Lunettes de Vue</td>
-                    <td>
-                      <div class="fw-bold">850 DH</div>
-                    </td>
-                    <td>18</td>
-                    <td><span class="badge bg-success">Actif</span></td>
-                    <td>12/03/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/masonry-portfolio/3.jpg" alt="Urban Style">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Urban Style</div>
-                      <div class="small text-muted">SKU: LS-001</div>
-                    </td>
-                    <td>Lunettes de Soleil</td>
-                    <td>
-                      <div class="fw-bold">750 DH</div>
-                      <div class="small text-muted text-decoration-line-through">950 DH</div>
-                    </td>
-                    <td>32</td>
-                    <td><span class="badge bg-success">Actif</span></td>
-                    <td>10/03/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/masonry-portfolio/4.jpg" alt="Sport Pro">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Sport Pro</div>
-                      <div class="small text-muted">SKU: LS-002</div>
-                    </td>
-                    <td>Lunettes de Soleil</td>
-                    <td>
-                      <div class="fw-bold">890 DH</div>
-                    </td>
-                    <td>5</td>
-                    <td><span class="badge bg-warning text-dark">Stock faible</span></td>
-                    <td>08/03/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/products/lentilles1.jpg" alt="Daily Comfort">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Daily Comfort</div>
-                      <div class="small text-muted">SKU: LC-001</div>
-                    </td>
-                    <td>Lentilles de Contact</td>
-                    <td>
-                      <div class="fw-bold">350 DH</div>
-                    </td>
-                    <td>42</td>
-                    <td><span class="badge bg-success">Actif</span></td>
-                    <td>05/03/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/products/lentilles2.jpg" alt="Monthly Elite">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Monthly Elite</div>
-                      <div class="small text-muted">SKU: LC-002</div>
-                    </td>
-                    <td>Lentilles de Contact</td>
-                    <td>
-                      <div class="fw-bold">450 DH</div>
-                    </td>
-                    <td>0</td>
-                    <td><span class="badge bg-danger">Rupture de stock</span></td>
-                    <td>01/03/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/products/accessoire1.jpg" alt="Étui Premium">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Étui Premium</div>
-                      <div class="small text-muted">SKU: AC-001</div>
-                    </td>
-                    <td>Accessoires</td>
-                    <td>
-                      <div class="fw-bold">180 DH</div>
-                    </td>
-                    <td>56</td>
-                    <td><span class="badge bg-success">Actif</span></td>
-                    <td>28/02/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="product-image">
-                        <img src="assets/img/products/accessoire2.jpg" alt="Kit de Nettoyage Complet">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="fw-bold">Kit de Nettoyage Complet</div>
-                      <div class="small text-muted">SKU: AC-002</div>
-                    </td>
-                    <td>Accessoires</td>
-                    <td>
-                      <div class="fw-bold">90 DH</div>
-                      <div class="small text-muted text-decoration-line-through">120 DH</div>
-                    </td>
-                    <td>38</td>
-                    <td><span class="badge bg-success">Actif</span></td>
-                    <td>25/02/2025</td>
-                    <td class="product-actions">
-                      <button class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#editProductModal">
-                        <i class="bi bi-pencil"></i>
-                      </button>
-                      <button class="btn btn-sm btn-outline-danger">
-                        <i class="bi bi-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
@@ -888,19 +671,15 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form>
+          <form action="/produitAdmin/create" method="POST">
             <div class="row g-3">
               <div class="col-md-6">
                 <label for="productName" class="form-label">Nom du produit</label>
-                <input type="text" class="form-control" id="productName" required>
-              </div>
-              <div class="col-md-6">
-                <label for="productSKU" class="form-label">SKU</label>
-                <input type="text" class="form-control" id="productSKU" required>
+                <input type="text" class="form-control" name="name" id="productName" required>
               </div>
               <div class="col-md-6">
                 <label for="productCategory" class="form-label">Catégorie</label>
-                <select class="form-select" id="productCategory" required>
+                <select class="form-select" name="category" id="productCategory" required>
                   <option value="">Sélectionner une catégorie</option>
                   <option value="lunettes-vue">Lunettes de Vue</option>
                   <option value="lunettes-soleil">Lunettes de Soleil</option>
