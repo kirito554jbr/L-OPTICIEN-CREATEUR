@@ -191,6 +191,8 @@
 </head>
 
 <body>
+
+    {{-- @dd($timesOfTheDay); --}}
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
@@ -227,6 +229,7 @@
     </nav>
 
     <div class="wrapper">
+        
         <div class="left-side">
             <div class="logo">
                 <img src="{{ asset('assets/' . 'logo1.png') }}" alt="Logo"
@@ -240,43 +243,45 @@
         </div>
         <div class="right-side">
             <h1>Prenez Rendez-vous</h1>
-            @csrf
-            <label for="name">Nom complet</label>
-            <input type="text" name="name" id="name" placeholder="Votre nom complet" required>
+            <form action="/rendezVous/create" method="POST">
+                @csrf
+                <label for="name">Nom complet</label>
+                <input type="text" name="name" id="name" placeholder="Votre nom complet" required>
 
-            <label for="email">Adresse Email</label>
-            <input type="email" name="email" id="email" placeholder="Votre email" required>
+                <label for="email">Adresse Email</label>
+                <input type="email" name="email" id="email" placeholder="Votre email" required>
 
-            <label for="phone">Numéro de téléphone</label>
-            <input type="text" name="phone" id="phone" placeholder="Votre numéro de téléphone" required>
+                <label for="phone">Numéro de téléphone</label>
+                <input type="text" name="phone" id="phone" placeholder="Votre numéro de téléphone" required>
 
-            <label for="date">Date du rendez-vous</label>
-            <input type="date" name="date" id="date" required onclick="showAlert()">
+                <label for="date">Date du rendez-vous</label>
+                <input type="date" name="date" id="date" required onclick="showAlert()">
 
-            <div class="alert alert-info mt-3" id="availability-alert" style="display: none;">
-                Veuillez vérifier les heures disponibles ci-dessous.
-            </div>
+                <div class="alert alert-info mt-3" id="availability-alert" style="display: none;">
+                    Veuillez vérifier les heures disponibles ci-dessous.
+                </div>
 
 
 
-            <label for="time">Heure du rendez-vous</label>
-            <select name="time" id="time" required
-                style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; transition: all 0.3s ease;">
-                <option value="9">9:00</option>
-                <option value="10">10:00</option>
-                <option value="11">11:00</option>
-                <option value="12">12:00</option>
-                <option value="14">14:00</option>
-                <option value="15">15:00</option>
-                <option value="16">16:00</option>
-                <option value="17">17:00</option>
-                <option value="18">18:00</option>
-            </select>
+                <label for="time">Heure du rendez-vous</label>
+                <select name="time" id="time" required
+                    style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; transition: all 0.3s ease;">
+                    <option value="9:00:00">9:00</option>
+                    <option value="10:00:00">10:00</option>
+                    <option value="11:00:00">11:00</option>
+                    <option value="12:00:00">12:00</option>
+                    <option value="14:00:00">14:00</option>
+                    <option value="15:00:00">15:00</option>
+                    <option value="16:00:00">16:00</option>
+                    <option value="17:00:00">17:00</option>
+                    <option value="18:00:00">18:00</option>
+                </select>
 
-            <label for="message">Message (optionnel)</label>
-            <textarea name="message" id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
+                <label for="message">Message (optionnel)</label>
+                <textarea name="message" id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
 
-            <button type="submit">Réserver</button>
+                <button type="submit">Réserver</button>
+            </form>
         </div>
     </div>
 
@@ -284,7 +289,12 @@
         <div class="card-header bg-primary text-white">
             <h3 style="margin: 0;">Calendrier</h3>
         </div>
+        <div class="form-group m-4">
+            <label for="date-select" class="form-label fw-bold text-primary">Choisissez une date</label>
+            <input type="date" id="date-select" class="form-control border-primary shadow-sm" style="border-radius: 8px; padding: 6px; font-size: 14px; width: 50%;">
+        </div>
         <div class="card-body">
+
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -314,8 +324,11 @@
                         <td>Mercredi</td>
                         <td>
                             <div class="time-slot text-success">9:00 AM - 10:00 AM</div>
-                            <div class="time-slot text-success">10:00 AM - 12:00 PM</div>
-                            <div class="time-slot text-success">1:00 PM - 6:00 PM</div>
+                            <div class="time-slot text-danger">10:00 AM - 11:00 AM</div>
+                            <div class="time-slot text-success">11:00 AM - 12:00 PM</div>
+                            <div class="time-slot text-success">1:00 PM - 3:00 PM</div>
+                            <div class="time-slot text-danger">3:00 PM - 4:00 PM</div>
+                            <div class="time-slot text-success">4:00 PM - 6:00 PM</div>
                         </td>
                     </tr>
                     <tr>
@@ -327,18 +340,27 @@
                     <tr>
                         <td>Vendredi</td>
                         <td>
-                            <div class="time-slot text-success">9:00 AM - 12:00 PM</div>
-                            <div class="time-slot text-success">1:00 PM - 6:00 PM</div>
+                            <div class="time-slot text-success">9:00 AM - 10:00 AM</div>
+                            <div class="time-slot text-danger">10:00 AM - 11:00 AM</div>
+                            <div class="time-slot text-success">11:00 AM - 12:00 PM</div>
+                            <div class="time-slot text-success">1:00 PM - 3:00 PM</div>
+                            <div class="time-slot text-danger">3:00 PM - 4:00 PM</div>
+                            <div class="time-slot text-success">4:00 PM - 6:00 PM</div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+
+
     <script>
         function showAlert() {
             document.getElementById('availability-alert').style.display = 'block';
         }
+
+        const timesOfTheDay = @json($timesOfTheDay);
+        console.log(timesOfTheDay);
     </script>
 </body>
 

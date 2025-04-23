@@ -18,7 +18,7 @@ class CreateRendezVousesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->text('description');
-            $table->date('date');
+            $table->dateTime('date');
             $table->timestamps();
         });
     }

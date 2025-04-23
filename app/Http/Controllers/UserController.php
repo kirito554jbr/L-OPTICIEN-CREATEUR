@@ -48,7 +48,7 @@ class UserController extends Controller
         $user->password = bcrypt($request->input('password'));
         $user->role()->associate($role);
         $user->save();
-        return redirect()->route('users')->with('Utilisateur mis à jour avec succès');
+        return redirect()->route('/')->with('Utilisateur mis à jour avec succès');
     }
 
     public function delete(Request $request, $id){

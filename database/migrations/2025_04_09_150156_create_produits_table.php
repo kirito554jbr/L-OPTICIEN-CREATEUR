@@ -20,6 +20,8 @@ class CreateProduitsTable extends Migration
             $table->float('prix');
             $table->string('image');
             $table->integer('quantiter');
+            $table->unsignedBigInteger('categorie_id');
+            $table->foreign('categorie_id')->references('id')->on('produits')->onDelete('cascade');
             $table->timestamps();
         });
     }

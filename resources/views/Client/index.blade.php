@@ -125,7 +125,7 @@
                         <a class="nav-link" href="/ProduitClient">Produits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#catalog">Catalogue</a>
+                        <a class="nav-link" href="/rendez_vous">Rendez-vous</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>

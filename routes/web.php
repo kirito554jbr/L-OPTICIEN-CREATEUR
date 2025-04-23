@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategorieController;
-use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\RendezVousController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +25,7 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('Client.index');
-});
+})->name('main');
 
 // Route::get('/ProduitClient', function () {
 //     return view('Client.produit');
@@ -45,9 +46,9 @@ Route::get('/produitAdmin', function () {
     return view('Admin.produit');
 });
 
-Route::get('/rendez_vous', function () {
-    return view('Client.rendez_vous');
-});
+// Route::get('/rendez_Vous', function () {
+//     return view('Client.rendez_vous');
+// });
 
 Route::get('/categoryAdmin', function () {
     return view('Admin.categorie');
@@ -94,4 +95,14 @@ Route::controller(CategorieController::class)->group(function () {
     Route::post('/categorie/create', 'create')->name('categorie.create');
     Route::post('/categorie/update/{id}', 'update')->name('categorie.update');
     Route::post('/categorie/delete/{id}', 'delete')->name('categorie.delete');
+});
+
+
+
+Route::controller(RendezVousController::class)->group(function () {
+    Route::get('/rendezVous', 'index')->name('rendezVous');
+    Route::get('/rendez_vous', 'ClientIndex')->name('ClientIndex');
+    Route::post('/rendezVous/create', 'create')->name('rendezVous.create');
+    Route::post('/rendezVous/update/{id}', 'update')->name('rendezVous.update');
+    Route::post('/rendezVous/delete/{id}', 'delete')->name('rendezVous.delete');
 });
