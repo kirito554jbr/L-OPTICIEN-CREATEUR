@@ -383,7 +383,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/users">
+                        <a class="nav-link" href="#">
                             <i class="bi bi-people"></i> Clients
                         </a>
                     </li>
@@ -429,30 +429,6 @@
                     </div>
                 </div>
                 <div class="ms-auto d-flex align-items-center">
-                    {{-- <div class="dropdown me-3">
-                        <button class="btn btn-light position-relative" type="button" id="notificationsDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                3
-                                <span class="visually-hidden">notifications non lues</span>
-                            </span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-                            <li>
-                                <h6 class="dropdown-header">Notifications</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Nouvelle commande #1234</a></li>
-                            <li><a class="dropdown-item" href="#">Stock faible: Lunettes Urban Style</a></li>
-                            <li><a class="dropdown-item" href="#">5 nouveaux messages</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-primary" href="#">Voir toutes les notifications</a>
-                            </li>
-                        </ul>
-                    </div> --}}
                     <div class="dropdown">
                         <button class="btn d-flex align-items-center" type="button" id="userDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -504,92 +480,6 @@
                     </div>
                 </div>
 
-                <!-- Stats Cards -->
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-primary-light text-primary">
-                                <i class="bi bi-box-seam"></i>
-                            </div>
-                            <div class="stats-card-value">124</div>
-                            <div class="stats-card-label">Total des produits</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-success-light text-success">
-                                <i class="bi bi-graph-up-arrow"></i>
-                            </div>
-                            <div class="stats-card-value">18</div>
-                            <div class="stats-card-label">Produits en promotion</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-warning-light text-warning">
-                                <i class="bi bi-exclamation-triangle"></i>
-                            </div>
-                            <div class="stats-card-value">5</div>
-                            <div class="stats-card-label">Stock faible</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-danger-light text-danger">
-                                <i class="bi bi-x-circle"></i>
-                            </div>
-                            <div class="stats-card-value">2</div>
-                            <div class="stats-card-label">Rupture de stock</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Filters -->
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <div class="col-lg-3 col-md-6">
-                                <label for="categoryFilter" class="form-label">Catégorie</label>
-                                <select class="form-select" id="categoryFilter">
-                                    <option value="">Toutes les catégories</option>
-                                    <option value="lunettes-vue">Lunettes de Vue</option>
-                                    <option value="lunettes-soleil">Lunettes de Soleil</option>
-                                    <option value="lentilles">Lentilles de Contact</option>
-                                    <option value="accessoires">Accessoires</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <label for="statusFilter" class="form-label">Statut</label>
-                                <select class="form-select" id="statusFilter">
-                                    <option value="">Tous les statuts</option>
-                                    <option value="active">Actif</option>
-                                    <option value="inactive">Inactif</option>
-                                    <option value="out-of-stock">Rupture de stock</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <label for="priceFilter" class="form-label">Prix</label>
-                                <select class="form-select" id="priceFilter">
-                                    <option value="">Tous les prix</option>
-                                    <option value="0-500">0 - 500 DH</option>
-                                    <option value="500-1000">500 - 1000 DH</option>
-                                    <option value="1000+">1000+ DH</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-3 col-md-6">
-                                <label for="sortFilter" class="form-label">Trier par</label>
-                                <select class="form-select" id="sortFilter">
-                                    <option value="newest">Plus récent</option>
-                                    <option value="oldest">Plus ancien</option>
-                                    <option value="price-asc">Prix croissant</option>
-                                    <option value="price-desc">Prix décroissant</option>
-                                    <option value="name-asc">Nom (A-Z)</option>
-                                    <option value="name-desc">Nom (Z-A)</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- Products Table -->
                 <div class="card">
@@ -605,16 +495,16 @@
                                             </div>
                                         </th>
                                         <th width="80">Image</th>
-                                        <th>Produit</th>
-                                        <th>Catégorie</th>
-                                        <th>Prix</th>
-                                        <th>Stock</th>
-                                        <th>Date d'ajout</th>
+                                        <th>firstName</th>
+                                        <th>lastName</th>
+                                        <th>email</th>
+                                        <th>phone</th>
+                                        <th>role</th>
                                         <th width="120">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($produits as $produit)
+                                    @foreach ($users as $user)
                                         <tr>
                                             <td>
                                                 <div class="form-check">
@@ -622,36 +512,39 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="product-image" style="width: 100%; height: 100%; object-fit: cover;">
-                                                    <img src="{{ $produit->image }}" >
+                                                <div class="product-image"
+                                                    style="width: 100%; height: 100%; object-fit: cover;">
+                                                    <img src="{{ $user->image }}">
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="fw-bold">{{ $produit->name }}</div>
-
+                                                <div class="fw-bold">{{ $user->firstName }}</div>
                                             </td>
-
-                                            <td>{{ $produit->categorie->name }}</td>
 
                                             <td>
-                                                <div class="fw-bold">{{ $produit->prix }}</div>
+                                                {{ $user->lastName }}
+                                            </td>
+
+                                            <td>
+                                                <div class="fw-bold">{{ $user->email }}</div>
                                                 {{-- <div class="small text-muted text-decoration-line-through">1200 DH</div> --}}
                                             </td>
-                                            <td>{{ $produit->quantiter }}</td>
-                                            <td>{{ $produit->created_at }}</td>
+                                            <td>{{ $user->phone }}</td>
+                                            <td>{{ $user->role->name }}</td>
                                             <td class="product-actions">
                                                 <button
-                                                    onclick="showinfowithmodal('{{ $produit->id }}' ,'{{ $produit->name }}' ,'{{ $produit->image }}', '{{ $produit->categorie->name }}', {{ $produit->prix }} ,'{{ $produit->quantiter }}' ,'{{ $produit->description }}')"
+                                                    onclick="showinfowithmodal('{{ $user->id }}' ,'{{ $user->firstName }}' , '{{ $user->lastName }}','{{ $user->image }}', '{{ $user->role->name }}', '{{ $user->email }}' ,'{{ $user->phone }}')"
                                                     class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
-                                              <form action="/produitAdmin/delete/{{ $produit->id }}"  method="POST"
+                                                <form action="/users/delete/{{ $user->id }}" method="POST"
                                                     class="d-inline-block">
                                                     @csrf
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                    <i class="bi bi-trash"><input type="hidden" value="{{ $produit->id }}"></i>
-                                                </button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                        <i class="bi bi-trash"><input type="hidden"
+                                                                value="{{ $user->id }}"></i>
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -664,7 +557,7 @@
                         <div class="d-flex justify-content-between align-items-center mt-4">
                             <div class="text-muted">
                                 Affichage de <span class="fw-bold">1-8</span> sur <span class="fw-bold">24</span>
-                                produits
+                                users
                             </div>
                             <nav aria-label="Product pagination">
                                 <ul class="pagination mb-0">
@@ -696,65 +589,45 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Ajouter un produit</h5>
+                    <h5 class="modal-title" id="addProductModalLabel">Ajouter un utilisateur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="/produitAdmin/create" method="POST">
+                    <form action="/users/create" method="POST">
                         @csrf
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <label for="productName" class="form-label">Nom du produit</label>
-                                <input type="text" class="form-control" name="name" id="productName" required>
+                                <label for="productName" class="form-label">Prenom</label>
+                                <input type="text" class="form-control" name="firstName" id="productName"
+                                    required>
                             </div>
                             <div class="col-md-6">
-                                <label for="productCategory" class="form-label">Catégorie</label>
-                                <select class="form-select" name="categorie" id="productCategory" required>
-                                    @foreach ($category as $categories)
-                                        <option value="{{ $categories->name }}">{{ $categories->name }}</option>
+                                <label for="productPrice" class="form-label">Nom</label>
+                                <input type="text" class="form-control" name="lastName" id="productPrice"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productCategory" class="form-label">Role</label>
+                                <select class="form-select" name="role" id="productCategory" required>
+                                    @foreach ($roles as $role)
+                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>
-
-
                             </div>
-                            {{-- <div class="col-md-6">
-                <label for="productStatus" class="form-label">Statut</label>
-                <select class="form-select" id="productStatus" required>
-                  <option value="active">Actif</option>
-                  <option value="inactive">Inactif</option>
-                  <option value="out-of-stock">Rupture de stock</option>
-                </select>
-              </div> --}}
+
                             <div class="col-md-6">
-                                <label for="productPrice" class="form-label">Prix (DH)</label>
-                                <input type="number" class="form-control" name="prix" id="productPrice"
-                                    required>
-                            </div>
-                            {{-- <div class="col-md-6">
-                <label for="productSalePrice" class="form-label">Prix promotionnel (DH)</label>
-                <input type="number" class="form-control" id="productSalePrice">
-              </div> --}}
-                            <div class="col-md-6">
-                                <label for="productStock" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="productStock"
+                                <label for="productStock" class="form-label">Email</label>
+                                <input type="text" class="form-control" name="email" id="productStock"
                                     required>
                             </div>
 
                             <div class="col-12">
-                                <label for="productDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="productDescription" name="description" rows="3" required></textarea>
+                                <label for="productDescription" class="form-label">phone</label>
+                                <input type="text" class="form-control" id="productDescription" name="phone"
+                                    required></input>
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Images du produit</label>
-                                {{-- <div class="dropzone">
-                  <div class="dropzone-icon">
-                    <i class="bi bi-cloud-arrow-up"></i>
-                  </div>
-                  <p class="mb-2">Glissez et déposez des fichiers ici</p>
-                  <p class="text-muted small mb-2">ou</p>
-                  <button type="button" class="btn btn-sm btn-outline-primary">Parcourir les fichiers</button>
-                  <p class="text-muted small mt-2">PNG, JPG ou WEBP (max. 5 MB)</p>
-                </div> --}}
+                                <label class="form-label">Images d'utilisateur</label>
                                 <input type="text" name="image">
                             </div>
                         </div>
@@ -774,46 +647,50 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Modifier le produit</h5>
+                    <h5 class="modal-title" id="editProductModalLabel">Modifier l'utilisateur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="addAction" method="POST">
                     @csrf
-                <div class="modal-body">
+                    <div class="modal-body">
                         <div class="row g-3">
-                          
+
                             <div class="col-md-6">
-                                <label for="editProductName" class="form-label">Nom du produit</label>
-                                <input type="text" class="form-control" id="editProductName" name="name"
+                                <label for="editProductName" class="form-label">Prenom</label>
+                                <input type="text" class="form-control" id="editProductName" name="firstName"
                                     required>
                             </div>
                             <div class="col-md-6">
-                                <label for="editProductCategory" class="form-label">Catégorie</label>
-                                <select class="form-select" name="categorie" id="editProductCategory" required>
-                                    @foreach ($category as $categories)
-                                        <option value="{{ $categories->name }}">{{ $categories->name }}</option>
+                                <label for="editProductCategory" class="form-label">Role</label>
+                                <select class="form-select" name="role" id="editProductCategory" required>
+                                    @foreach ($roles as $roles)
+                                        <option value="{{ $roles->name }}">{{ $roles->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="editProductPrice" class="form-label">Prix (DH)</label>
-                                <input type="number" class="form-control" name="prix" id="editProductPrice"
+                                <label for="editProductPrice" class="form-label">Nom (DH)</label>
+                                <input type="text" class="form-control" name="lastName" id="editProductPrice"
                                     required>
                             </div>
                             <div class="col-md-6">
-                                <label for="editProductStock" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="editProductStock"
+                                <label for="editProductStock" class="form-label">Email</label>
+                                <input type="text" class="form-control" name="email" id="editProductStock"
                                     required>
                             </div>
+                            
+
+                            
                             <div class="col-12">
-                                <label for="editProductDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="editProductDescription" name="description" rows="3" required></textarea>
+                                <label for="editProductDescription" class="form-label">Phone</label>
+                                <input class="form-control" id="editProductDescription" name="phone"
+                                    type="text" required></input>
                             </div>
 
 
 
                             <div class="col-12">
-                                <label class="form-label">Images du produit</label>
+                                <label class="form-label">Images du user</label>
                                 <div class="row g-2 mb-3">
                                     {{-- <div class="col-auto">
                     <div class="position-relative">
@@ -832,89 +709,87 @@
                                     <input type="text" id="editProductImage" name="image">
                                 </div>
                             </div>
-                            <input type="hidden" name="id" id="productId">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                             <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
                         </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
+    </div>
 
-        <!-- Vendor JS Files (CDN) -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Vendor JS Files (CDN) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Main JS File -->
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Toggle Sidebar
-                const toggleSidebar = document.getElementById('toggleSidebar');
-                const sidebar = document.getElementById('sidebar');
+    <!-- Main JS File -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle Sidebar
+            const toggleSidebar = document.getElementById('toggleSidebar');
+            const sidebar = document.getElementById('sidebar');
 
-                if (toggleSidebar) {
-                    toggleSidebar.addEventListener('click', function() {
-                        sidebar.classList.toggle('show');
-                    });
-                }
-
-                // Select All Products Checkbox
-                const selectAllProducts = document.getElementById('selectAllProducts');
-                const productCheckboxes = document.querySelectorAll(
-                    '.product-table .form-check-input:not(#selectAllProducts)');
-
-                if (selectAllProducts) {
-                    selectAllProducts.addEventListener('change', function() {
-                        productCheckboxes.forEach(checkbox => {
-                            checkbox.checked = selectAllProducts.checked;
-                        });
-                    });
-                }
-
-                // Check if all checkboxes are checked
-                function updateSelectAllCheckbox() {
-                    let allChecked = true;
-                    productCheckboxes.forEach(checkbox => {
-                        if (!checkbox.checked) {
-                            allChecked = false;
-                        }
-                    });
-
-                    if (selectAllProducts) {
-                        selectAllProducts.checked = allChecked;
-                    }
-                }
-
-                // Add event listeners to product checkboxes
-                productCheckboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', updateSelectAllCheckbox);
+            if (toggleSidebar) {
+                toggleSidebar.addEventListener('click', function() {
+                    sidebar.classList.toggle('show');
                 });
-
-                // Close sidebar when clicking outside on mobile
-                document.addEventListener('click', function(event) {
-                    if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
-                        if (!sidebar.contains(event.target) && event.target !== toggleSidebar) {
-                            sidebar.classList.remove('show');
-                        }
-                    }
-                });
-            });
-
-
-            function showinfowithmodal(id, name, image, categorie, prix, quantiter, description) {
-              document.getElementById('productId').value = id;
-              document.getElementById('editProductName').value = name;
-              document.getElementById('editProductStock').value = quantiter;
-              document.getElementById('editProductPrice').value = prix;
-              document.getElementById('editProductCategory').value = categorie;
-              document.getElementById('editProductDescription').value = description;
-              document.getElementById('editProductImage').value = image;
-              document.getElementById('addAction').action = '/produitAdmin/update/' + id;
             }
 
-            
-        </script>
+            // // Select All Products Checkbox
+            // const selectAllProducts = document.getElementById('selectAllProducts');
+            // const productCheckboxes = document.querySelectorAll(
+            //     '.product-table .form-check-input:not(#selectAllProducts)');
+
+            // if (selectAllProducts) {
+            //     selectAllProducts.addEventListener('change', function() {
+            //         productCheckboxes.forEach(checkbox => {
+            //             checkbox.checked = selectAllProducts.checked;
+            //         });
+            //     });
+            // }
+
+            // Check if all checkboxes are checked
+            // function updateSelectAllCheckbox() {
+            //     let allChecked = true;
+            //     productCheckboxes.forEach(checkbox => {
+            //         if (!checkbox.checked) {
+            //             allChecked = false;
+            //         }
+            //     });
+
+            //     if (selectAllProducts) {
+            //         selectAllProducts.checked = allChecked;
+            //     }
+            // }
+
+            // Add event listeners to product checkboxes
+            // productCheckboxes.forEach(checkbox => {
+            //     checkbox.addEventListener('change', updateSelectAllCheckbox);
+            // });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
+                    if (!sidebar.contains(event.target) && event.target !== toggleSidebar) {
+                        sidebar.classList.remove('show');
+                    }
+                }
+            });
+        });
+
+
+        function showinfowithmodal(id, firstName, lastName, image, role, email, phone) {
+            // // console.log(firstName);
+            // document.getElementById('productId').value = id;
+            document.getElementById('editProductName').value = firstName;
+            document.getElementById('editProductStock').value = email;
+            document.getElementById('editProductPrice').value = lastName;
+            document.getElementById('editProductCategory').value = role;
+            document.getElementById('editProductDescription').value = phone;
+            document.getElementById('editProductImage').value = image;
+            document.getElementById('addAction').action = '/users/update/' + id;
+        }
+    </script>
 </body>
 
 </html>

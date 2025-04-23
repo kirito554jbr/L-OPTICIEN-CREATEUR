@@ -15,9 +15,29 @@ class CategorieController extends Controller
     public function create(Request $request){
         $categorie = new Categorie();
         $categorie->name = $request->input('name');
-        $categorie->description = $request->input('description');
         $categorie->save();
-        return redirect()->route('produitAdmin')->with('success', 'Categorie ajouté avec succès');
+        return redirect("categorie")->with('success', 'Categorie ajouté avec succès');
+    }
+
+    public function update(Request $request, $id){
+        
+        $categorie = Categorie::find($id);
+        if (!$categorie) {
+            return redirect()->route('categorie')->with('Categorie non trouvé');
+        }
+        $categorie->name = $request->input('name');
+        $categorie->save();
+        
+        return redirect()->route('categorie')->with('Categorie mis à jour avec succès');
+
+    }
+    public function delete(Request $request, $id){
+        $categorie = Categorie::find($id);
+        if (!$categorie) {
+            return redirect()->route('categorie')->with('Categorie non trouvé');
+        }
+        $categorie->delete();
+        return redirect()->route('categorie')->with('Categorie supprimé avec succès');
     }
     
 }

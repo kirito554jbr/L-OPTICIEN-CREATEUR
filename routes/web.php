@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,18 +26,32 @@ Route::get('/', function () {
     return view('Client.index');
 });
 
-Route::get('/ProduitClient', function () {
-    return view('Client.produit');
-});
+// Route::get('/ProduitClient', function () {
+//     return view('Client.produit');
+// });
+
+Route::get('/ProduitClient', [ProduitController::class, 'indexClient'])->name('produitClient');
 
 Route::get('/dashboardAdmin', function () {
     return view('Admin.dashboard');
 });
 
 
+Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+Route::post('/profileImage', [UserController::class, 'updateProifileImage'])->name('profileImage');
+
+
 Route::get('/produitAdmin', function () {
     return view('Admin.produit');
 });
+
+Route::get('/rendez_vous', function () {
+    return view('Client.rendez_vous');
+});
+
+Route::get('/categoryAdmin', function () {
+    return view('Admin.categorie');
+})->name("ToCategorie");
 
 Route::get('/Toregister', function () {
     return view('auth.register');
@@ -49,15 +65,33 @@ Route::get('/Tologin', function () {
 Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'register')->name('register');
     Route::post('/login', 'login')->name('login');
-    Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
 });
 
 
 Route::get('/role/create', [RoleController::class, 'create']);
 
+Route::controller(UserController::class)->group(function () {
+    Route::get('/users', 'index')->name('users');
+    Route::post('/users/create', 'create')->name('user.create');
+    Route::post('/users/update/{id}', 'update')->name('user.update');
+    Route::post('/users/delete/{id}', 'delete')->name('user.delete');
+});
+
+
+
+
 Route::controller(ProduitController::class)->group(function () {
     Route::get('/produitAdmin', 'index')->name('produitAdmin');
     Route::post('/produitAdmin/create', 'create')->name('produit.create');
-    Route::put('/produitAdmin/update/{id}', 'update')->name('produit.update');
-    Route::delete('/produitAdmin/delete/{id}', 'delete')->name('produit.delete');
+    Route::post('/produitAdmin/update/{id}', 'update')->name('produit.update');
+    Route::post('/produitAdmin/delete/{id}', 'delete')->name('produit.delete');
+});
+
+
+Route::controller(CategorieController::class)->group(function () {
+    Route::get('/categorie', 'index')->name('categorie');
+    Route::post('/categorie/create', 'create')->name('categorie.create');
+    Route::post('/categorie/update/{id}', 'update')->name('categorie.update');
+    Route::post('/categorie/delete/{id}', 'delete')->name('categorie.delete');
 });

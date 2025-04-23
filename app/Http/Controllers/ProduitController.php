@@ -11,33 +11,36 @@ class ProduitController extends Controller
 {
     public function index(Request $request){
         $produits = Produit::all();
-        return view('Admin.produit', compact('produits'));
+    
+        $category = Categorie::all();
+
+        // dd($category);
+
+        // dd($produits);
+        return view('Admin.produit', compact('produits', "category"));
     }
 
     public function create(Request $request){
 
+        // dd($request['categorie']);
         $categorie = Categorie::where('name', $request['categorie'])->first();
+        // dd($request['quantity']);
 
         $produit = new Produit();
         $produit->name = $request->input('name');
         $produit->prix = $request->input('prix');
         $produit->description = $request->input('description');
         $produit->image = $request->input('image');
-        $produit->quantity = $request->input('quantity');
-        $produit->categorie_id()->associate($categorie);
+        $produit->quantiter = $request->input('quantity');
+        $produit->categorie()->associate($categorie);
         $produit->save();
-        return redirect()->route('produitAdmin');
+        return redirect("produitAdmin");
     }
 
     public function update(Request $request, $id){
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'prix' => 'required|numeric',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'quantity' => 'required|integer|min:1',
-        ]);
+        
         $produit = Produit::find($id);
+        $categorie = Categorie::where('name', $request['categorie'])->first();
         if (!$produit) {
             return redirect()->route('produitAdmin')->with('Produit non trouvé');
         }
@@ -46,7 +49,8 @@ class ProduitController extends Controller
         $produit->prix = $request->input('prix');
         $produit->description = $request->input('description');
         $produit->image = $request->input('image');
-        $produit->quantity = $request->input('quantity');
+        $produit->quantiter = $request->input('quantity');
+        $produit->categorie()->associate($categorie);
         $produit->save();
 
         return redirect()->route('produitAdmin')->with('Produit mis à jour avec succès');
@@ -61,5 +65,22 @@ class ProduitController extends Controller
         $produit->delete();
         return redirect()->route('produitAdmin')->with('Produit supprimé avec succès');      
 
+    }
+
+
+
+    ///////Client///////
+
+
+
+    public function indexClient(Request $request){
+        $produits = Produit::all();
+    
+        $category = Categorie::all();
+
+        // dd($category);
+
+        // dd($produits);
+        return view('Client.produit', compact('produits', "category"));
     }
 }

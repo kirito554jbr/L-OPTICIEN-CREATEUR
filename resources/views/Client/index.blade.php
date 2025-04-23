@@ -133,17 +133,21 @@
                 </ul>
             </div>
             <div class="d-flex">
-                <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
-                <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
+                @guest
+                    <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
+                    <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
+                @endguest
+                @auth
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         Mon Compte
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="">Profil</a></li>
-                        <li><a class="dropdown-item" href="">Se déconnecter</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                        <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
                     </ul>
                 </div>
+                @endauth
             </div>
         </div>
     </nav>

@@ -437,30 +437,29 @@
 
                 <!-- Products Grid -->
                 <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
-                    <!-- Product 1 -->
                     @foreach($produits as $produit)
+                    <!-- Product 1 -->
                     <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-vue">
                         <div class="card product-card h-100 shadow-sm">
                             <span class="badge bg-primary product-badge">Nouveau</span>
-                            <img src="{{ asset('assets/masonry-portfolio/' . '1.jpg') }}" class="card-img-top"
+                            <img src="{{ $produit->image }}" class="card-img-top"
                                 alt="Lunettes de vue modèle Danien">
                             <div class="card-body">
-                                <p class="product-category mb-1">Lunettes de Vue</p>
-                                <h5 class="card-title fw-bold">Danien Classic</h5>
-                                <p class="card-text">Monture élégante pour hommes et femmes, avec option 2 en 1
-                                    incluant un clip solaire magnétique.</p>
+                                <p class="product-category mb-1">{{ $produit->categorie->name }}</p>
+                                <h5 class="card-title fw-bold">{{ $produit->name }}</h5>
+                                <p class="card-text">{{ $produit->description }}</p>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <div class="product-price">
                                         <span class="old-price">1200 DH</span>
-                                        <span>950 DH</span>
+                                        <span>{{ $produit->prix }}DH</span>
                                     </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
+                                    
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @endforeach
                     
+                    @endforeach
                 </div>
 
                 <!-- Pagination -->

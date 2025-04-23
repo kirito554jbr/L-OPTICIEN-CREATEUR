@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenez Rendez-vous</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .wrapper {
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin: auto;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .left-side {
+            flex: 1;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .left-side .logo {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .left-side .logo img {
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+        }
+
+        .left-side .available-days {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .right-side {
+            flex: 2;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input,
+        textarea,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        .calendar {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .calendar .table {
+            margin: auto;
+            width: 100%;
+            max-width: 600px;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        .calendar .table th,
+        .calendar .table td {
+            vertical-align: middle;
+            text-align: center;
+            padding: 15px;
+            background: #f9f9f9;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .calendar .table th {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: #fff;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .time-slot {
+            display: inline-block;
+            margin: 5px 0;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .time-slot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .text-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .text-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a href="index.html" class="navbar-brand d-flex align-items-center">
+                <img src="{{ asset('assets/' . 'logo1.png') }}" alt="Logo" width="60">
+                <h1 class="h3 mb-0 ms-2">L'OPTICIEN CREATEUR</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">Qui sommes nous?</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#services">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/ProduitClient">Produits</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#catalog">Catalogue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="wrapper">
+        <div class="left-side">
+            <div class="logo">
+                <img src="{{ asset('assets/' . 'logo1.png') }}" alt="Logo"
+                    style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            </div>
+            <div class="available-days">
+                <h3>Jours Disponibles</h3>
+                <p>Lundi - Vendredi</p>
+                <p>9:00 AM - 6:00 PM</p>
+            </div>
+        </div>
+        <div class="right-side">
+            <h1>Prenez Rendez-vous</h1>
+            @csrf
+            <label for="name">Nom complet</label>
+            <input type="text" name="name" id="name" placeholder="Votre nom complet" required>
+
+            <label for="email">Adresse Email</label>
+            <input type="email" name="email" id="email" placeholder="Votre email" required>
+
+            <label for="phone">Numéro de téléphone</label>
+            <input type="text" name="phone" id="phone" placeholder="Votre numéro de téléphone" required>
+
+            <label for="date">Date du rendez-vous</label>
+            <input type="date" name="date" id="date" required onclick="showAlert()">
+
+            <div class="alert alert-info mt-3" id="availability-alert" style="display: none;">
+                Veuillez vérifier les heures disponibles ci-dessous.
+            </div>
+
+
+
+            <label for="time">Heure du rendez-vous</label>
+            <select name="time" id="time" required
+                style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; transition: all 0.3s ease;">
+                <option value="9">9:00</option>
+                <option value="10">10:00</option>
+                <option value="11">11:00</option>
+                <option value="12">12:00</option>
+                <option value="14">14:00</option>
+                <option value="15">15:00</option>
+                <option value="16">16:00</option>
+                <option value="17">17:00</option>
+                <option value="18">18:00</option>
+            </select>
+
+            <label for="message">Message (optionnel)</label>
+            <textarea name="message" id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
+
+            <button type="submit">Réserver</button>
+        </div>
+    </div>
+
+    <div class="card mt-4 mx-3">
+        <div class="card-header bg-primary text-white">
+            <h3 style="margin: 0;">Calendrier</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Jour</th>
+                        <th>Heures Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Lundi</td>
+                        <td>
+                            <div class="time-slot text-success">9:00 AM - 10:00 AM</div>
+                            <div class="time-slot text-danger">10:00 AM - 11:00 AM</div>
+                            <div class="time-slot text-success">11:00 AM - 12:00 PM</div>
+                            <div class="time-slot text-success">1:00 PM - 3:00 PM</div>
+                            <div class="time-slot text-danger">3:00 PM - 4:00 PM</div>
+                            <div class="time-slot text-success">4:00 PM - 6:00 PM</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mardi</td>
+                        <td>
+                            <div class="time-slot text-danger" style="font-style: italic;">Non disponible</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Mercredi</td>
+                        <td>
+                            <div class="time-slot text-success">9:00 AM - 10:00 AM</div>
+                            <div class="time-slot text-success">10:00 AM - 12:00 PM</div>
+                            <div class="time-slot text-success">1:00 PM - 6:00 PM</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Jeudi</td>
+                        <td>
+                            <div class="time-slot text-danger" style="font-style: italic;">Non disponible</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Vendredi</td>
+                        <td>
+                            <div class="time-slot text-success">9:00 AM - 12:00 PM</div>
+                            <div class="time-slot text-success">1:00 PM - 6:00 PM</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function showAlert() {
+            document.getElementById('availability-alert').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
