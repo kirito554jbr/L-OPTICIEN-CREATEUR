@@ -1,9 +1,13 @@
 <?php
 
+use App\Models\Produit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\RendezVousController;
@@ -31,11 +35,16 @@ Route::get('/', function () {
 //     return view('Client.produit');
 // });
 
-Route::get('/ProduitClient', [ProduitController::class, 'indexClient'])->name('produitClient');
 
-Route::get('/dashboardAdmin', function () {
-    return view('Admin.dashboard');
+Route::get('/charge', function () {
+    return view('Client.charge');
 });
+
+
+// Route::get('/dashboardAdmin', function () {
+//     return view('Admin.dashboard');
+// });
+Route::get('/dashboardAdmin', [AdminController::class, 'ashboard'])->name('dashboardAdmin');
 
 
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
@@ -76,6 +85,8 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index')->name('users');
     Route::post('/users/create', 'create')->name('user.create');
     Route::post('/users/update/{id}', 'update')->name('user.update');
+    Route::post('/users/profileUpdate/{id}', 'profileUpdate')->name('profile.update');
+    Route::post('/users/passwordUpdate/{id}', 'passwordUpdate')->name('passsword.update');
     Route::post('/users/delete/{id}', 'delete')->name('user.delete');
 });
 
@@ -88,6 +99,16 @@ Route::controller(ProduitController::class)->group(function () {
     Route::post('/produitAdmin/update/{id}', 'update')->name('produit.update');
     Route::post('/produitAdmin/delete/{id}', 'delete')->name('produit.delete');
 });
+
+
+Route::controller(ProduitController::class)->group(function () {
+    Route::get('/ProduitClient', 'indexClient')->name('produitClient');
+    Route::get('/show/{id}', 'show')->name('produit.show');
+    Route::post('/filterPerCategorie', 'filterPerCategorie')->name('produit.filter');
+});
+
+
+
 
 
 Route::controller(CategorieController::class)->group(function () {
@@ -105,4 +126,36 @@ Route::controller(RendezVousController::class)->group(function () {
     Route::post('/rendezVous/create', 'create')->name('rendezVous.create');
     Route::post('/rendezVous/update/{id}', 'update')->name('rendezVous.update');
     Route::post('/rendezVous/delete/{id}', 'delete')->name('rendezVous.delete');
+});
+
+
+Route::get('cart', [ProduitController::class, 'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [ProduitController::class, 'addToCart'])->name('add.to.cart');
+Route::patch('update-cart', [ProduitController::class, 'update'])->name('update.cart');
+Route::patch('update-cart-quantiter/{id}', [ProduitController::class, 'updateQuantiter'])->name('update.cart.quantiter');
+Route::delete('remove-from-cart/{id}', [ProduitController::class, 'remove'])->name('remove.from.cart');
+Route::delete('remove-from-cart-all', [ProduitController::class, 'removeAll'])->name('remove.from.cart.all');
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/orders',  'index')->middleware('auth');
+    Route::get('/orders/create', 'create')->name('order.create');
+    Route::get('/AdminOrders',  'Adminindex')->middleware(['auth']);
+    Route::get('/details/{id}',  'orderDetails');
+    Route::put('/orders/{id}/updateStatus', 'updateStatus')->name("orders.updateStatus");
+});
+
+
+
+Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
+Route::post('/session', [StripeController::class, 'session'])->name('session');
+Route::get('/success', [StripeController::class, 'success'])->name('success');  
+
+
+
+Route::get('/404', function () {
+    return view('errors.notFound');
+})->name('404');
+
+Route::fallback(function () {
+    return redirect('/404');
 });

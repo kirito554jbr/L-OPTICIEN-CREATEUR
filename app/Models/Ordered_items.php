@@ -16,7 +16,7 @@ class Ordered_items extends Model
     {
         return $this->belongsTo(Order::class);
     }
-    public function product()
+    public function produit()
     {
         return $this->belongsTo(Produit::class);
     }

@@ -27,7 +27,7 @@ class RendezVousController extends Controller
         $timesOfTheDay = [];
 
         foreach ($rendezVous as $rdv) {
-       
+
             $datetime = $rdv->date; // e.g., "2025-04-23 14:30:00"
             // Convert to Carbon instance
             $date = Carbon::parse($datetime);
@@ -40,10 +40,9 @@ class RendezVousController extends Controller
             // Create a new Carbon instance from parts (optional)
             $dayOfWeek = Carbon::create($year, $month, $day)->format('l');
 
-            
+
 
             $timesOfTheDay += [$rdv->date => $dayOfWeek];
-
         }
         // dd($timesOfTheDay);
 
@@ -58,23 +57,46 @@ class RendezVousController extends Controller
         // dd($request->all());    
         $user = User::where('email', $request->input('email'))->first();
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found');
+            return redirect()->back()->with('notFound', 'Email not found');
         }
         // dd($user->id);
 
+        $datetime = $request->input('date');
+        $date = Carbon::parse($datetime);
 
-        if (!$checkIfExist = RendezVous::where('date', $request->input('date') . ' ' . $request->input('time'))) {
-            return redirect()->back()->with('error', 'date not available');
+        $year = $date->year;
+        $month = $date->month;
+        $day = $date->day;
+
+
+        $dayOfWeek = Carbon::create($year, $month, $day)->format('l');
+
+
+        if ($dayOfWeek == "Sunday" || $dayOfWeek == "Saturday") {
+            return redirect()->back()->with('error', 'this day is not available');
         }
 
-        $rendezVous = new RendezVous();
-        $rendezVous->date = $request->input('date') . ' ' . $request->input('time');
-        // dd($rendezVous->date);
-        $rendezVous->description = $request->input('message');
-        $rendezVous->user()->associate($user);
-        $rendezVous->save();
 
-        return redirect()->route('main');
+        // $exists = RendezVous::where('column_name', 'value')->exists();
+        $checkIfExist = RendezVous::where('date', $request->input('date') . ' ' . $request->input('time'))->exists();
+
+
+
+        if ($checkIfExist) {
+            return redirect()->back()->with('exist', 'date not available');
+        } else {
+
+
+
+            $rendezVous = new RendezVous();
+            $rendezVous->date = $request->input('date') . ' ' . $request->input('time');
+            // dd($rendezVous->date);
+            $rendezVous->description = $request->input('message');
+            $rendezVous->user()->associate($user);
+            $rendezVous->save();
+
+            return redirect()->route('main');
+        }
     }
 
     public function update(Request $request, RendezVous $rendezVous)

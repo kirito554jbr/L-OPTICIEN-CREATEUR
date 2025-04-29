@@ -187,6 +187,8 @@
             background-color: #f8d7da;
             color: #721c24;
         }
+
+        
     </style>
 </head>
 
@@ -196,7 +198,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <a href="index.html" class="navbar-brand d-flex align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center">
                 <img src="{{ asset('assets/' . 'logo1.png') }}" alt="Logo" width="60">
                 <h1 class="h3 mb-0 ms-2">L'OPTICIEN CREATEUR</h1>
             </a>
@@ -206,24 +208,33 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#hero">Accueil</a>
+                        <a class="nav-link" href="/">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">Qui sommes nous?</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#services">Services</a>
+                        <a class="nav-link active" href="/rendez_vous">Rendez-vous</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/ProduitClient">Produits</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#catalog">Catalogue</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#contact">Contact</a>
-                    </li>
                 </ul>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                @guest
+                    <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
+                    <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
+                @endguest
+                @auth
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                            <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                @endauth
             </div>
         </div>
     </nav>
@@ -250,6 +261,12 @@
 
                 <label for="email">Adresse Email</label>
                 <input type="email" name="email" id="email" placeholder="Votre email" required>
+                @if(session('notFound'))
+                <div class="alert alert-danger mt-3">
+                    {{ session('notFound') }}
+                </div>
+
+                @endIf
 
                 <label for="phone">Numéro de téléphone</label>
                 <input type="text" name="phone" id="phone" placeholder="Votre numéro de téléphone" required>
@@ -276,6 +293,19 @@
                     <option value="17:00:00">17:00</option>
                     <option value="18:00:00">18:00</option>
                 </select>
+                @if(session('error'))
+                <div class="alert alert-danger mt-3">
+                    {{ session('error') }}
+                </div>
+
+                @endIf
+                @if(session('exist'))
+                <div class="alert alert-danger mt-3">
+                    {{ session('exist') }}
+                </div>
+
+                @endIf
+
 
                 <label for="message">Message (optionnel)</label>
                 <textarea name="message" id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>

@@ -378,7 +378,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/orders">
                             <i class="bi bi-cart"></i> Commandes
                         </a>
                     </li>
@@ -388,7 +388,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/rendezVous">
                             <i class="bi bi-calendar-event"></i> Rendez-vous
                         </a>
                     </li>
@@ -399,13 +399,9 @@
                     </li>
                     <hr class="my-3" />
 
+                    
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link">
-                            <i class="bi bi-arrow-left-circle"></i>Retour au site
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-danger">
+                        <a href="/logout" class="nav-link text-danger">
                             <i class="bi bi-box-arrow-right"></i>Déconnexion
                         </a>
                     </li>
@@ -433,7 +429,8 @@
                         <button class="btn d-flex align-items-center" type="button" id="userDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="admin-user-avatar">
-                                <img src="{{ asset('assets/team/' . 'team-1.jpg') }}" alt="Admin">
+                                
+                                <img src="{{ auth()->user()->image }}" alt="Admin">
                             </div>
                             <div class="d-none d-sm-block">
                                 <div class="fw-bold">Admin</div>
@@ -449,7 +446,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="#"><i
+                            <li><a class="dropdown-item text-danger" href="/logout"><i
                                         class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
                         </ul>
                     </div>
@@ -533,7 +530,7 @@
                                             <td>{{ $user->role->name }}</td>
                                             <td class="product-actions">
                                                 <button
-                                                    onclick="showinfowithmodal('{{ $user->id }}' ,'{{ $user->firstName }}' , '{{ $user->lastName }}','{{ $user->image }}', '{{ $user->role->name }}', '{{ $user->email }}' ,'{{ $user->phone }}')"
+                                                    onclick="showinfowithmodal('{{ $user->id }}' ,'{{ $user->firstName }}' , '{{ $user->lastName }}','{{ $user->image }}', '{{ $user->role->name }}', '{{ $user->email }}' ,'{{ $user->phone }}', '{{ $user->adress }}')"
                                                     class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal">
                                                     <i class="bi bi-pencil"></i>
@@ -621,9 +618,14 @@
                                     required>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <label for="productDescription" class="form-label">phone</label>
                                 <input type="text" class="form-control" id="productDescription" name="phone"
+                                    required></input>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productAdress" class="form-label">Adress</label>
+                                <input type="text" class="form-control" id="productAdress" name="phone"
                                     required></input>
                             </div>
                             <div class="col-12">
@@ -681,9 +683,14 @@
                             
 
                             
-                            <div class="col-12">
+                            <div class="col-md-6">
                                 <label for="editProductDescription" class="form-label">Phone</label>
                                 <input class="form-control" id="editProductDescription" name="phone"
+                                    type="text" required></input>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editProductAdress" class="form-label">Adress</label>
+                                <input class="form-control" id="editProductAdress" name="adress"
                                     type="text" required></input>
                             </div>
 
@@ -735,37 +742,6 @@
                 });
             }
 
-            // // Select All Products Checkbox
-            // const selectAllProducts = document.getElementById('selectAllProducts');
-            // const productCheckboxes = document.querySelectorAll(
-            //     '.product-table .form-check-input:not(#selectAllProducts)');
-
-            // if (selectAllProducts) {
-            //     selectAllProducts.addEventListener('change', function() {
-            //         productCheckboxes.forEach(checkbox => {
-            //             checkbox.checked = selectAllProducts.checked;
-            //         });
-            //     });
-            // }
-
-            // Check if all checkboxes are checked
-            // function updateSelectAllCheckbox() {
-            //     let allChecked = true;
-            //     productCheckboxes.forEach(checkbox => {
-            //         if (!checkbox.checked) {
-            //             allChecked = false;
-            //         }
-            //     });
-
-            //     if (selectAllProducts) {
-            //         selectAllProducts.checked = allChecked;
-            //     }
-            // }
-
-            // Add event listeners to product checkboxes
-            // productCheckboxes.forEach(checkbox => {
-            //     checkbox.addEventListener('change', updateSelectAllCheckbox);
-            // });
 
             // Close sidebar when clicking outside on mobile
             document.addEventListener('click', function(event) {
@@ -778,7 +754,7 @@
         });
 
 
-        function showinfowithmodal(id, firstName, lastName, image, role, email, phone) {
+        function showinfowithmodal(id, firstName, lastName, image, role, email, phone, adress) {
             // // console.log(firstName);
             // document.getElementById('productId').value = id;
             document.getElementById('editProductName').value = firstName;
@@ -787,6 +763,7 @@
             document.getElementById('editProductCategory').value = role;
             document.getElementById('editProductDescription').value = phone;
             document.getElementById('editProductImage').value = image;
+            document.getElementById('editProductAdress').value = adress;
             document.getElementById('addAction').action = '/users/update/' + id;
         }
     </script>

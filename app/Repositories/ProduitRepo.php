@@ -1,30 +1,35 @@
 <?php
-
-namespace App\Http\Controllers;
-
-use App\Models\User;
+namespace App\Repositories;
 use App\Models\Produit;
-use App\Models\Categorie;
-use Illuminate\Http\Request;
+use  App\Repositories\Interfaces\ProduitInterface;
 
-class ProduitController extends Controller
+class ProduitRepo implements ProduitInterface
 {
-    public function index(Request $request){
+    protected $produitModel;
+
+    public function __construct(Produit $produitModel)
+    {
+        $this->produitModel = $produitModel;
+    }
+
+    public function index(Produit $request){
         // $produits = Produit::all();
     
         $produits = Produit::paginate(10);
         $produitForCards = Produit::all();
-        $category = Categorie::all();
+        // $category = Categorie::all();
+        $category = $this->categorieRepositorie->AllCategories();
         // dd($category);
 
         // dd($produits);
         return view('Admin.produit', compact('produits', "category", 'produitForCards'));
     }
 
-    public function create(Request $request){
+    public function create(Produit $request){
 
         // dd($request['categorie']);
-        $categorie = Categorie::where('name', $request['categorie'])->first();
+        // $categorie = Categorie::where('name', $request['categorie'])->first();
+        $categorie = $this->categorieRepositorie->getCategorieByName($request['categorie']);
         // dd($request['quantity']);
 
         $produit = new Produit();
@@ -38,10 +43,11 @@ class ProduitController extends Controller
         return redirect("produitAdmin");
     }
 
-    public function update(Request $request, $id){
+    public function update(Produit $request, $id){
         
         $produit = Produit::find($id);
-        $categorie = Categorie::where('name', $request['categorie'])->first();
+        // $categorie = Categorie::where('name', $request['categorie'])->first();
+        $categorie = $this->categorieRepositorie->getCategorieByName($request['categorie']);
         if (!$produit) {
             return redirect()->route('produitAdmin')->with('Produit non trouvé');
         }
@@ -59,7 +65,7 @@ class ProduitController extends Controller
 
     }
 
-    public function delete(Request $request, $id){
+    public function delete(Produit $request, $id){
         $produit = Produit::find($id);
         if (!$produit) {
             return redirect()->route('produitAdmin')->with('Produit non trouvé');
@@ -75,11 +81,12 @@ class ProduitController extends Controller
 
 
 
-    public function indexClient(Request $request){
+    public function indexClient(Produit $request){
         // $produits = Produit::all();
         $produits = Produit::paginate(12);
     
-        $category = Categorie::all();
+        // $category = Categorie::all();
+        $category = $this->categorieRepositorie->AllCategories();
 
         // dd($category);
 
@@ -141,7 +148,7 @@ class ProduitController extends Controller
     }
 
 
-    public function updateCart(Request $request)
+    public function updateCart(Produit $request)
 
     {
 
@@ -202,7 +209,7 @@ class ProduitController extends Controller
 
 
 
-    public function removeAll(Request $request)
+    public function removeAll(Produit $request)
 
     {
 
@@ -225,7 +232,7 @@ class ProduitController extends Controller
     }
 
 
-    public function updateQuantiter(Request $request,$id)
+    public function updateQuantiter(Produit $request,$id)
 
     {
         // dd($request->quantity);
@@ -251,9 +258,10 @@ class ProduitController extends Controller
 
     }
    
-    public function filterPerCategorie(Request $request){
+    public function filterPerCategorie(Produit $request){
         // dd($request->all());
-        $categorie = Categorie::where('name', $request['categorie'])->first();
+        // $categorie = Categorie::where('name', $request['categorie'])->first();
+        $category = $this->categorieRepositorie->AllCategories();
         // dd($categorie);
         $produits = Produit::where('categorie_id', $categorie->id)->paginate(10);
         return view('Client.produit', compact('produits'));   

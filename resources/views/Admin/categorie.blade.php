@@ -378,7 +378,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">
+                        <a class="nav-link active" href="/orders">
                             <i class="bi bi-cart"></i> Commandes
                         </a>
                     </li>
@@ -388,7 +388,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="rendezVous">
                             <i class="bi bi-calendar-event"></i> Rendez-vous
                         </a>
                     </li>
@@ -399,13 +399,9 @@
                     </li>
                     <hr class="my-3" />
 
+                   
                     <li class="nav-item">
-                        <a href="index.html" class="nav-link">
-                            <i class="bi bi-arrow-left-circle"></i>Retour au site
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link text-danger">
+                        <a href="/logout" class="nav-link text-danger">
                             <i class="bi bi-box-arrow-right"></i>Déconnexion
                         </a>
                     </li>
@@ -430,34 +426,13 @@
                 </div>
                 <div class="ms-auto d-flex align-items-center">
                     <div class="dropdown me-3">
-                        <button class="btn btn-light position-relative" type="button" id="notificationsDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-bell"></i>
-                            <span
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                3
-                                <span class="visually-hidden">notifications non lues</span>
-                            </span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-                            <li>
-                                <h6 class="dropdown-header">Notifications</h6>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Nouvelle commande #1234</a></li>
-                            <li><a class="dropdown-item" href="#">Stock faible: Lunettes Urban Style</a></li>
-                            <li><a class="dropdown-item" href="#">5 nouveaux messages</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item text-primary" href="#">Voir toutes les notifications</a>
-                            </li>
-                        </ul>
+                        
                     </div>
                     <div class="dropdown">
                         <button class="btn d-flex align-items-center" type="button" id="userDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="admin-user-avatar">
-                                <img src="{{ asset('assets/team/' . 'team-1.jpg') }}" alt="Admin">
+                                <img src="{{ auth()->user()->image }}" alt="Admin">
                             </div>
                             <div class="d-none d-sm-block">
                                 <div class="fw-bold">Admin</div>
@@ -473,7 +448,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item text-danger" href="#"><i
+                            <li><a class="dropdown-item text-danger" href="/logout"><i
                                         class="bi bi-box-arrow-right me-2"></i>Déconnexion</a></li>
                         </ul>
                     </div>
@@ -656,58 +631,7 @@
 
     <!-- Main JS File -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle Sidebar
-            const toggleSidebar = document.getElementById('toggleSidebar');
-            const sidebar = document.getElementById('sidebar');
-
-            if (toggleSidebar) {
-                toggleSidebar.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
-                });
-            }
-
-            // Select All Products Checkbox
-            const selectAllProducts = document.getElementById('selectAllProducts');
-            const productCheckboxes = document.querySelectorAll(
-                '.product-table .form-check-input:not(#selectAllProducts)');
-
-            if (selectAllProducts) {
-                selectAllProducts.addEventListener('change', function() {
-                    productCheckboxes.forEach(checkbox => {
-                        checkbox.checked = selectAllProducts.checked;
-                    });
-                });
-            }
-
-            // Check if all checkboxes are checked
-            function updateSelectAllCheckbox() {
-                let allChecked = true;
-                productCheckboxes.forEach(checkbox => {
-                    if (!checkbox.checked) {
-                        allChecked = false;
-                    }
-                });
-
-                if (selectAllProducts) {
-                    selectAllProducts.checked = allChecked;
-                }
-            }
-
-            // Add event listeners to product checkboxes
-            productCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateSelectAllCheckbox);
-            });
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
-                    if (!sidebar.contains(event.target) && event.target !== toggleSidebar) {
-                        sidebar.classList.remove('show');
-                    }
-                }
-            });
-        });
+        
 
         
         function showinfowithmodal(id, name) {

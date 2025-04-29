@@ -378,7 +378,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/orders">
+                        <a class="nav-link active" href="#">
                             <i class="bi bi-cart"></i> Commandes
                         </a>
                     </li>
@@ -388,12 +388,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rendezVous">
+                        <a class="nav-link" href="rendezVous">
                             <i class="bi bi-calendar-event"></i> Rendez-vous
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/categorie">
+                        <a class="nav-link" href="#">
                             <i class="bi bi-gear"></i> Category
                         </a>
                     </li>
@@ -425,7 +425,9 @@
                     </div>
                 </div>
                 <div class="ms-auto d-flex align-items-center">
+                    <div class="dropdown me-3">
 
+                    </div>
                     <div class="dropdown">
                         <button class="btn d-flex align-items-center" type="button" id="userDropdown"
                             data-bs-toggle="dropdown" aria-expanded="false">
@@ -458,64 +460,26 @@
                 <div class="content-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h1 class="h3 mb-0">Gestion des Produits</h1>
+                            <h1 class="h3 mb-0">Gestion des categories</h1>
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb mb-0 mt-1">
                                     <li class="breadcrumb-item"><a href="admin-dashboard.html"
                                             class="text-decoration-none">Dashboard</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Produits</li>
+                                    <li class="breadcrumb-item active" aria-current="page">orders</li>
                                 </ol>
                             </nav>
                         </div>
-                        <div class="col-auto">
-
+                        {{-- <div class="col-auto">
                             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal">
-                                <i class="bi bi-plus-lg me-1"></i> Ajouter un produit
+                                <i class="bi bi-plus-lg me-1"></i> Ajouter une category
                             </button>
-
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
 
-                <!-- Stats Cards -->
-                <div class="row">
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-primary-light text-primary">
-                                <i class="bi bi-box-seam"></i>
-                            </div>
-                            <div class="stats-card-value">{{ $produitForCards->count() }}</div>
-                            <div class="stats-card-label">Total des produits</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-success-light text-success">
-                                <i class="bi bi-graph-up-arrow"></i>
-                            </div>
-                            <div class="stats-card-value">{{ $produitForCards->where('promotion', '>', 0)->count() }}</div>
-                            <div class="stats-card-label">Produits en promotion</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-warning-light text-warning">
-                                <i class="bi bi-exclamation-triangle"></i>
-                            </div>
-                            <div class="stats-card-value">{{ $produitForCards->where('quantiter', '<', 20)->where('quantiter', '!=', 0)->count() }}</div>
-                            <div class="stats-card-label">Stock faible</div>
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6">
-                        <div class="stats-card bg-white">
-                            <div class="stats-card-icon bg-danger-light text-danger">
-                                <i class="bi bi-x-circle"></i>
-                            </div>
-                            <div class="stats-card-value">{{ $produitForCards->where('quantiter', '<', 20)->count() }}</div>
-                            <div class="stats-card-label">Rupture de stock</div>
-                        </div>
-                    </div>
-                </div>
+
+
+
 
 
                 <!-- Products Table -->
@@ -531,61 +495,35 @@
                                                     id="selectAllProducts">
                                             </div>
                                         </th>
-                                        <th width="80">Image</th>
-                                        <th>Produit</th>
-                                        <th>Catégorie</th>
-                                        <th>Prix</th>
-                                        <th>Promotion</th>
-                                        <th>Stock</th>
+
+                                        <th>email</th>
+
                                         <th>Date d'ajout</th>
-                                        <th width="120">Actions</th>
+                                        <th>Adress</th>
+                                        <th>status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($produits as $produit)
+                                    @foreach ($orders as $order)
                                         <tr>
                                             <td>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox">
                                                 </div>
                                             </td>
+                                            {{-- @dd($order->popo) --}}
+                                            <td>{{ $order->popo->email }}</td>
+                                            <td>{{ $order->created_at }} </td>
+                                            <td>{{ $order->adresse }} </td>
                                             <td>
-                                                <div class="product-image"
-                                                    style="width: 100%; height: 100%; object-fit: cover;">
-                                                    <img src="{{ $produit->image }}">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="fw-bold">{{ $produit->name }}</div>
-
-                                            </td>
-
-                                            <td>{{ $produit->categorie->name }}</td>
-
-                                            <td>
-                                                <div class="fw-bold">{{ $produit->prix }}</div>
-                                                {{-- <div class="small text-muted text-decoration-line-through">1200 DH</div> --}}
-                                            </td>
-                                            <td>
-                                                <div class="fw-bold">{{ $produit->promotion }}</div>
-                                                {{-- <div class="small text-muted text-decoration-line-through">1200 DH</div> --}}
-                                            </td>
-                                            <td>{{ $produit->quantiter }}</td>
-                                            <td>{{ $produit->created_at }}</td>
-                                            <td class="product-actions">
-                                                <button
-                                                    onclick="showinfowithmodal('{{ $produit->id }}' ,'{{ $produit->name }}' ,'{{ $produit->image }}', '{{ $produit->categorie->name }}', {{ $produit->prix }} ,'{{ $produit->quantiter }}' ,'{{ $produit->description }}', '{{ $produit->promotion }}')"
-                                                    class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal"
-                                                    data-bs-target="#editProductModal">
-                                                    <i class="bi bi-pencil"></i>
-                                                </button>
-                                                <form action="/produitAdmin/delete/{{ $produit->id }}"
-                                                    method="POST" class="d-inline-block">
+                                                <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                        <i class="bi bi-trash"><input type="hidden"
-                                                                value="{{ $produit->id }}"></i>
-                                                    </button>
+                                                    @method('PUT')
+                                                    <select name="status" onchange="this.form.submit()" >
+                                                        <option value="Pending">{{ $order->status }}</option>
+                                                        <option value="Accepted">Accepted</option>
+                                                        <option value="Rejected">Rejected</option>
+                                                    </select>
                                                 </form>
                                             </td>
                                         </tr>
@@ -593,143 +531,15 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{ $produits->links() }}
 
-                       
+                        {{ $orders->links() }}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Add Product Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addProductModalLabel">Ajouter un produit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="/produitAdmin/create" method="POST">
-                        @csrf
-                        <div class="row g-3">
-                            <div class="col-md-6">
-                                <label for="productName" class="form-label">Nom du produit</label>
-                                <input type="text" class="form-control" name="name" id="productName" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productCategory" class="form-label">Catégorie</label>
-                                <select class="form-select" name="categorie" id="productCategory" required>
-                                    @foreach ($category as $categories)
-                                        <option value="{{ $categories->name }}">{{ $categories->name }}</option>
-                                    @endforeach
-                                </select>
 
-
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productPrice" class="form-label">Prix (DH)</label>
-                                <input type="number" class="form-control" name="prix" id="productPrice"
-                                    required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productSalePrice" class="form-label">Prix promotionnel (DH)</label>
-                                <input type="number" class="form-control" id="productSalePrice">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="productStock" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="productStock"
-                                    required>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="productDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="productDescription" name="description" rows="3" required></textarea>
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Images du produit</label>
-                                
-                                <input type="text" name="image">
-                            </div>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                    <button type="submit" class="btn btn-primary">Ajouter le produit</button>
-                </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- Edit Product Modal -->
-    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editProductModalLabel">Modifier le produit</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="addAction" method="POST">
-                    @csrf
-                    <div class="modal-body">
-                        <div class="row g-3">
-
-                            <div class="col-md-6">
-                                <label for="editProductName" class="form-label">Nom du produit</label>
-                                <input type="text" class="form-control" id="editProductName" name="name"
-                                    required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editProductCategory" class="form-label">Catégorie</label>
-                                <select class="form-select" name="categorie" id="editProductCategory" required>
-                                    @foreach ($category as $categories)
-                                        <option value="{{ $categories->name }}">{{ $categories->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editProductPrice" class="form-label">Prix (DH)</label>
-                                <input type="number" class="form-control" name="prix" id="editProductPrice"
-                                    required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editProductPrice" class="form-label">Promotion (DH)</label>
-                                <input type="number" class="form-control" name="promotion" id="editProductPromotion"
-                                    >
-                            </div>
-                            <div class="col-md-6">
-                                <label for="editProductStock" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" name="quantity" id="editProductStock"
-                                    required>
-                            </div>
-                            <div class="col-12">
-                                <label for="editProductDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="editProductDescription" name="description" rows="3" required></textarea>
-                            </div>
-
-
-
-                            <div class="col-12">
-                                <label class="form-label">Images du produit</label>
-                                <div class="row g-2 mb-3">
-                    
-                                    <input type="text" id="editProductImage" name="image">
-                                </div>
-                            </div>
-                            <input type="hidden" name="id" id="productId">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-                        </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
     <!-- Vendor JS Files (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -738,16 +548,11 @@
     <script>
         
 
-        function showinfowithmodal(id, name, image, categorie, prix, quantiter, description, promotion) {
-            document.getElementById('productId').value = id;
-            document.getElementById('editProductName').value = name;
-            document.getElementById('editProductStock').value = quantiter;
-            document.getElementById('editProductPrice').value = prix;
-            document.getElementById('editProductPromotion').value = promotion;
-            document.getElementById('editProductCategory').value = categorie;
-            document.getElementById('editProductDescription').value = description;
-            document.getElementById('editProductImage').value = image;
-            document.getElementById('addAction').action = '/produitAdmin/update/' + id;
+
+        function showinfowithmodal(id, status) {
+            //   document.getElementById('productId').value = id;
+            document.getElementById('editCategorieName').value = status;
+            document.getElementById('addAction').action = '/categorie/update/' + id;
         }
     </script>
 </body>

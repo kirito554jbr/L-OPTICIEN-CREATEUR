@@ -206,7 +206,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/users">
                   <i class="bi bi-cart"></i> Commandes
                 </a>
               </li>
@@ -216,24 +216,20 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/rendezVous">
                   <i class="bi bi-calendar-event"></i> Rendez-vous
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <i class="bi bi-gear"></i> Paramètres
+                <a class="nav-link" href="/categorie" >
+                  <i class="bi bi-gear"></i> Category
                 </a>
               </li>
               <hr class="my-3" />
               
+              
               <li class="nav-item">
-                <a href="index.html" class="nav-link">
-                  <i class="bi bi-arrow-left-circle"></i>Retour au site
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link text-danger">
+                <a href="/logout" class="nav-link text-danger">
                   <i class="bi bi-box-arrow-right"></i>Déconnexion
                 </a>
               </li>
@@ -251,14 +247,7 @@
               </button>
 
               <div class="d-flex align-items-center ms-auto">
-                <div class="position-relative me-3">
-                  <i class="bi bi-bell fs-5"></i>
-                  <span class="notification-badge">3</span>
-                </div>
-                <div class="position-relative me-3">
-                  <i class="bi bi-envelope fs-5"></i>
-                  <span class="notification-badge">5</span>
-                </div>
+
                 <div class="dropdown">
                   <a
                     href="#"
@@ -268,7 +257,7 @@
                     aria-expanded="false"
                   >
                     <img
-                      src="/placeholder.svg?height=40&width=40"
+                      src="{{ auth()->user()->image }}"
                       alt="Admin"
                       class="avatar me-2"
                     />
@@ -284,13 +273,13 @@
                       >
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#"
-                        ><i class="bi bi-gear me-2"></i> Paramètres</a
+                      <a class="dropdown-item" href="/rendezVous"
+                        ><i class="bi bi-gear me-2"></i> Rendez-vous</a
                       >
                     </li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
-                      <a class="dropdown-item text-danger" href="#"
+                      <a class="dropdown-item text-danger" href="/logout"
                         ><i class="bi bi-box-arrow-right"></i> Déconnexion</a
                       >
                     </li>
@@ -405,25 +394,7 @@
             </div>
 
             <!-- Charts -->
-            <div class="row mb-4">
-              <div class="col-lg-8 mb-3">
-                <div class="card fade-in delay-1">
-                  <div class="card-body p-4">
-                    <h5 class="card-title">Ventes mensuelles</h5>
-                    <div class="chart-container" id="salesChart"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-4 mb-3">
-                <div class="card fade-in delay-2">
-                  <div class="card-body p-4">
-                    <h5 class="card-title">Catégories de produits</h5>
-                    <div class="chart-container" id="categoriesChart"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
 
             <!-- Recent Orders -->
             <div class="row mb-4">
@@ -450,6 +421,7 @@
                           </tr>
                         </thead>
                         <tbody>
+                          
                           <tr>
                             <td>#ORD-001</td>
                             <td>
@@ -495,147 +467,7 @@
                               </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>#ORD-002</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Thomas Dubois</h6>
-                                  <small class="text-muted"
-                                    >thomas@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Lunettes de soleil Dior</td>
-                            <td>13 Mar 2025</td>
-                            <td>€320.00</td>
-                            <td>
-                              <span class="badge bg-warning text-dark"
-                                >En cours</span
-                              >
-                            </td>
-                            <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>#ORD-003</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Marie Leroy</h6>
-                                  <small class="text-muted"
-                                    >marie@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Monture Gucci</td>
-                            <td>12 Mar 2025</td>
-                            <td>€180.00</td>
-                            <td>
-                              <span class="badge bg-info">Préparation</span>
-                            </td>
-                            <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>#ORD-004</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Pierre Moreau</h6>
-                                  <small class="text-muted"
-                                    >pierre@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Lentilles de contact</td>
-                            <td>11 Mar 2025</td>
-                            <td>€75.00</td>
-                            <td><span class="badge bg-success">Livré</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
+                          
                         </tbody>
                       </table>
                     </div>

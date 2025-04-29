@@ -30,6 +30,7 @@ class AuthController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->phone = $request->input('phone');
+        $user->image = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
         $role_name = 'Client' ;
         $role = Role::where('name',$role_name )->first();
         $user->role()->associate($role);
@@ -43,7 +44,7 @@ class AuthController extends Controller
         Auth::login($user);
         // return "acascascacac";  
 
-        return redirect('/ProduitClient');
+        return redirect('/');
     }
     
 
@@ -55,10 +56,21 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
+        $checkRole = User::where('email', $request->input('email'))->first();
+
+
+
+        if($checkRole->role_id == 1){
+            Auth::login($checkRole);
+            // dd(auth()->user());
+            return redirect('/dashboardAdmin')->with('success', 'Login successful!');
+
+        }
         // Attempt to log the user in
-        if (Auth::attempt($request->only('email', 'password'))) {
+        elseif (Auth::attempt($request->only('email', 'password'))) {
             return redirect('/')->with('success', 'Login successful!');
         }
+        
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
