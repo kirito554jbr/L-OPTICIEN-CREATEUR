@@ -393,7 +393,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="/categorie">
                             <i class="bi bi-gear"></i> Category
                         </a>
                     </li>
@@ -520,9 +520,10 @@
                                                     @csrf
                                                     @method('PUT')
                                                     <select name="status" onchange="this.form.submit()" >
-                                                        <option value="Pending">{{ $order->status }}</option>
+                                                        <option >{{ $order->status }}</option>
                                                         <option value="Accepted">Accepted</option>
                                                         <option value="Rejected">Rejected</option>
+                                                        <option value="Pending">Pending </option>
                                                     </select>
                                                 </form>
                                             </td>

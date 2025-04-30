@@ -4,39 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use App\Repositories\Interfaces\CategorieInterface;
 
 class CategorieController extends Controller
 {
-    public function index(Request $request){
-        $categories = Categorie::all();
+    private $categorieInterface;
+    public function __construct(CategorieInterface $categorieInterface)
+    {
+        $this->categorieInterface = $categorieInterface;
+    }
+
+    public function index(){
+        $categories = $this->categorieInterface->index();
         return view('Admin.categorie', compact('categories'));
     }
 
     public function create(Request $request){
-        $categorie = new Categorie();
-        $categorie->name = $request->input('name');
-        $categorie->save();
+        $validate = $request->validate([
+            'name' => 'required|string',
+        ]);
+        $this->categorieInterface->create($request->all());
         return redirect("categorie")->with('success', 'Categorie ajouté avec succès');
     }
 
     public function update(Request $request, $id){
+        $validate = $request->validate([
+            'name' => 'required|string',
+        ]);
         
-        $categorie = Categorie::find($id);
-        if (!$categorie) {
-            return redirect()->route('categorie')->with('Categorie non trouvé');
-        }
-        $categorie->name = $request->input('name');
-        $categorie->save();
+        $categorie = $this->categorieInterface->update($request->all(), $id);
         
         return redirect()->route('categorie')->with('Categorie mis à jour avec succès');
 
     }
     public function delete(Request $request, $id){
-        $categorie = Categorie::find($id);
-        if (!$categorie) {
-            return redirect()->route('categorie')->with('Categorie non trouvé');
-        }
-        $categorie->delete();
+        $categorie = $this->categorieInterface->delete($id);
         return redirect()->route('categorie')->with('Categorie supprimé avec succès');
     }
     

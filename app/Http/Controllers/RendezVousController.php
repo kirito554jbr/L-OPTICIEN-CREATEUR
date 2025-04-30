@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\RendezVous;
 use Illuminate\Http\Request;
+use App\Repositories\Interfaces\UserInterface;
+use App\Repositories\Interfaces\RendezVousInterface;
 
 class RendezVousController extends Controller
 {
 
+    private $userInterface;
+    private $rendezVousInterface;
+
+    public function __construct(UserInterface $userInterface, RendezVousInterface $rendezVousInterface)
+    {
+        $this->userInterface = $userInterface;
+        $this->rendezVousInterface = $rendezVousInterface;
+    }
+
+
     public function index()
     {
 
-        $rendezVous = RendezVous::all();
+        $rendezVous = $this->rendezVousInterface->index();
 
 
         return view('Admin.rendez_vous', compact('rendezVous'));
@@ -23,27 +34,8 @@ class RendezVousController extends Controller
     public function ClientIndex()
     {
 
-        $rendezVous = RendezVous::all();
-        $timesOfTheDay = [];
-
-        foreach ($rendezVous as $rdv) {
-
-            $datetime = $rdv->date; // e.g., "2025-04-23 14:30:00"
-            // Convert to Carbon instance
-            $date = Carbon::parse($datetime);
-
-            // Extract year, month, day
-            $year = $date->year;
-            $month = $date->month;
-            $day = $date->day;
-
-            // Create a new Carbon instance from parts (optional)
-            $dayOfWeek = Carbon::create($year, $month, $day)->format('l');
-
-
-
-            $timesOfTheDay += [$rdv->date => $dayOfWeek];
-        }
+        $timesOfTheDay = $this->rendezVousInterface->ClientIndex();
+        $rendezVous = $this->rendezVousInterface->index();
         // dd($timesOfTheDay);
 
 
@@ -53,68 +45,59 @@ class RendezVousController extends Controller
 
     public function create(Request $request)
     {
+        // dd($request->all());
+       $validate = $request->validate ([
+            'date' => 'required|date',
+            'time' => 'required',
+            'email' => 'required|email',
+            'message' => 'required|string',
+        ]);
+        // dd($validate);
+        // dd($validate);
 
-        // dd($request->all());    
-        $user = User::where('email', $request->input('email'))->first();
+        $user = $this->userInterface->findByEmail($request['email']);
+
         if (!$user) {
             return redirect()->back()->with('notFound', 'Email not found');
         }
-        // dd($user->id);
 
-        $datetime = $request->input('date');
-        $date = Carbon::parse($datetime);
-
-        $year = $date->year;
-        $month = $date->month;
-        $day = $date->day;
-
-
-        $dayOfWeek = Carbon::create($year, $month, $day)->format('l');
-
+        $dayOfWeek = $this->rendezVousInterface->carbon($request['date']);
 
         if ($dayOfWeek == "Sunday" || $dayOfWeek == "Saturday") {
             return redirect()->back()->with('error', 'this day is not available');
         }
 
 
-        // $exists = RendezVous::where('column_name', 'value')->exists();
-        $checkIfExist = RendezVous::where('date', $request->input('date') . ' ' . $request->input('time'))->exists();
-
-
+        $checkIfExist = $this->rendezVousInterface->checkIfExist($request['date'], $request['time']);
 
         if ($checkIfExist) {
             return redirect()->back()->with('exist', 'date not available');
         } else {
 
+        $rendezVous = $this->rendezVousInterface->create($request->all());
 
-
-            $rendezVous = new RendezVous();
-            $rendezVous->date = $request->input('date') . ' ' . $request->input('time');
-            // dd($rendezVous->date);
-            $rendezVous->description = $request->input('message');
-            $rendezVous->user()->associate($user);
-            $rendezVous->save();
-
-            return redirect()->route('main');
+            
+        
+        return redirect()->route('main');
         }
     }
 
-    public function update(Request $request, RendezVous $rendezVous)
+    public function update(Request $request, $id)
     {
-        $request->validate([
+        
+        $validate = ([
             'date' => 'required|date',
         ]);
+        $this->rendezVousInterface->update($request->all(), $id);
 
-        $rendezVous->update($request->all());
-
-        return redirect()->route('rendezVous.index');
+        return redirect()->route('rendezVous');
     }
 
 
-    public function delete(RendezVous $rendezVous)
+    public function delete($id)
     {
-        $rendezVous->delete();
-        return redirect()->route('rendezVous.index');
+        $this->rendezVousInterface->delete($id);
+        return redirect()->route('rendezVous');
     }
 
     public function nonAvailableHours(Request $request)
@@ -131,4 +114,7 @@ class RendezVousController extends Controller
 
 
     }
+
+
+    
 }

@@ -307,8 +307,8 @@
                 @endIf
 
 
-                <label for="message">Message (optionnel)</label>
-                <textarea name="message" id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
+                <label for="message">Message</label>
+                <textarea name="message"  id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
 
                 <button type="submit">Réserver</button>
             </form>
@@ -389,8 +389,8 @@
             document.getElementById('availability-alert').style.display = 'block';
         }
 
-        const timesOfTheDay = @json($timesOfTheDay);
-        console.log(timesOfTheDay);
+        // const timesOfTheDay = @json($timesOfTheDay);
+        // console.log(timesOfTheDay);
     </script>
 </body>
 

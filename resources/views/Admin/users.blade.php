@@ -530,7 +530,7 @@
                                             <td>{{ $user->role->name }}</td>
                                             <td class="product-actions">
                                                 <button
-                                                    onclick="showinfowithmodal('{{ $user->id }}' ,'{{ $user->firstName }}' , '{{ $user->lastName }}','{{ $user->image }}', '{{ $user->role->name }}', '{{ $user->email }}' ,'{{ $user->phone }}', '{{ $user->adress }}')"
+                                                    onclick="showinfowithmodal('{{ $user->id }}' ,'{{ $user->firstName }}' , '{{ $user->lastName }}','{{ $user->image }}', '{{ $user->role->name }}', '{{ $user->email }}' ,'{{ $user->phone }}', '{{ $user->adresse }}')"
                                                     class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal"
                                                     data-bs-target="#editProductModal">
                                                     <i class="bi bi-pencil"></i>
@@ -625,11 +625,16 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="productAdress" class="form-label">Adress</label>
-                                <input type="text" class="form-control" id="productAdress" name="phone"
+                                <input type="text" class="form-control" id="productAdress" name="adress"
+                                    required></input>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productPassword" class="form-label">Password</label>
+                                <input type="text" class="form-control" id="productPassword" name="password"
                                     required></input>
                             </div>
                             <div class="col-12">
-                                <label class="form-label">Images d'utilisateur</label>
+                                <label class="form-label">Images d'utilisateur :</label>
                                 <input type="text" name="image">
                             </div>
                         </div>
@@ -731,27 +736,7 @@
 
     <!-- Main JS File -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle Sidebar
-            const toggleSidebar = document.getElementById('toggleSidebar');
-            const sidebar = document.getElementById('sidebar');
-
-            if (toggleSidebar) {
-                toggleSidebar.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
-                });
-            }
-
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
-                    if (!sidebar.contains(event.target) && event.target !== toggleSidebar) {
-                        sidebar.classList.remove('show');
-                    }
-                }
-            });
-        });
+        
 
 
         function showinfowithmodal(id, firstName, lastName, image, role, email, phone, adress) {

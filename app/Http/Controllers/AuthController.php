@@ -51,7 +51,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validate = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
@@ -60,17 +60,26 @@ class AuthController extends Controller
 
 
 
-        if($checkRole->role_id == 1){
-            Auth::login($checkRole);
-            // dd(auth()->user());
-            return redirect('/dashboardAdmin')->with('success', 'Login successful!');
+        // if($checkRole->role_id == 1){
+        //     Auth::login($checkRole);
+        //     // dd(auth()->user());
+        //     return redirect('/dashboardAdmin')->with('success', 'Login successful!');
 
-        }
-        // Attempt to log the user in
-        elseif (Auth::attempt($request->only('email', 'password'))) {
+        // }
+        // // Attempt to log the user in
+        // elseif (Auth::attempt($request->only('email', 'password'))) {
+        //     return redirect('/')->with('success', 'Login successful!');
+        // }
+        
+        if (Auth::attempt($validate)) {
+            $user = Auth::user();
+    
+            if ($user->role_id == 1) {
+                return redirect('/dashboardAdmin')->with('success', 'Admin login successful!');
+            }
+    
             return redirect('/')->with('success', 'Login successful!');
         }
-        
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',

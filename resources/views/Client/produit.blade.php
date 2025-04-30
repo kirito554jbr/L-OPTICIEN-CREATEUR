@@ -750,46 +750,6 @@
                 className.addEventListener('scroll', listener);
             };
 
-            /**
-             * Navbar links active state on scroll
-             */
-            // let navbarlinks = select('#navbarMain .nav-link', true);
-            // const navbarlinksActive = () => {
-            //     let position = window.scrollY + 200;
-            //     navbarlinks.forEach(navbarlink => {
-            //         if (!navbarlink.hash) return;
-            //         let section = select(navbarlink.hash);
-            //         if (!section) return;
-            //         if (position >= section.offsetTop && position <= (section.offsetTop + section
-            //                 .offsetHeight)) {
-            //             navbarlink.classList.add('active');
-            //         } else {
-            //             navbarlink.classList.remove('active');
-            //         }
-            //     });
-            // };
-            // window.addEventListener('load', navbarlinksActive);
-            // onscroll(document, navbarlinksActive);
-
-            /**
-             * Toggle .header-scrolled class to #header when page is scrolled
-             */
-            // let selectHeader = select('#header');
-            // if (selectHeader) {
-            //     const headerScrolled = () => {
-            //         if (window.scrollY > 100) {
-            //             document.body.classList.add('scrolled');
-            //         } else {
-            //             document.body.classList.remove('scrolled');
-            //         }
-            //     };
-            //     window.addEventListener('load', headerScrolled);
-            //     onscroll(document, headerScrolled);
-            // }
-
-            /**
-             * Back to top button
-             */
             let backtotop = select('.scroll-top');
             if (backtotop) {
                 const toggleBacktotop = () => {

@@ -171,7 +171,7 @@
                             <input type="text" id="phone" name="phone" value="{{ $user->phone }}">
 
                             <label for="adress">Adress:</label>
-                            <input type="text" id="adress" name="adress" value="{{ $user->adress }}">
+                            <input type="text" id="adress" name="adress" value="{{ $user->adresse }}">
 
                             <button type="submit" class="btn">Save Changes</button>
                         </div>

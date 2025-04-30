@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use App\Repositories\Interfaces\RoleInterface;
 
 class RoleController extends Controller
 {
+    private $roleInterface;
+
+    public function __construct(RoleInterface $roleInterface)
+    {
+        $this->roleInterface = $roleInterface;
+    }
   
     public function index()
     {
-        $roles = Role::all();
+        $roles = $this->roleInterface->index();
+
         return view('', compact('roles'));
     }
 
@@ -19,30 +27,36 @@ class RoleController extends Controller
     
     public function create(Request $request)
     {
-        Role::create([
-            'name' => $request['name']
+        $request->validate([
+            'name' => 'required|string|max:255',
         ]);
+
+        $role = $this->roleInterface->create($request->all());
+
+        // $role
         return redirect()->route('produitAdmin');
     }
 
 
 
   
-    public function update(Request $request, Role $role)
+    public function update(Request $request,$id)
     {
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $role->update($request->all());
+        $this->roleInterface->update($request->all(), $id);
 
         return redirect()->route('produitAdmin');
     }
 
   
-    public function delete(Role $role)
+    public function delete($id)
     {
-        $role->delete();
+        $this->roleInterface->delete($id);
         return redirect()->route('produitAdmin');
     }
+
+
 }

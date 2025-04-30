@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\UserInterface;
+use App\Repositories\UserRepository;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -17,43 +19,44 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'App\Repositories\Interfaces\ProduitInterface',
-            'App\Repositories\ProduitRepo'
+            'App\Repositories\ProduitRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\CategorieInterface',
-            'App\Repositories\CategorieRepo'
+            'App\Repositories\CategorieRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\RendezVousInterface',
-            'App\Repositories\RendezVousRepo'
+            'App\Repositories\RendezVousRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\RoleInterface',
-            'App\Repositories\RoleRepo'
+            'App\Repositories\RoleRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\UserInterface',
-            'App\Repositories\UserRepo'
+            'App\Repositories\UserRepository'
         );
+       
         $this->app->bind(
-            'App\Repositories\Interfaces\OrderInterface',
-            'App\Repositories\OrderRepo'
+            'App\Repositories\Interfaces\ordersInterface',
+            'App\Repositories\OrdersRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\StripeInterface',
-            'App\Repositories\StripeRepo'
+            'App\Repositories\StripeRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\AuthInterface',
-            'App\Repositories\AuthRepo'
+            'App\Repositories\AuthRepository'
         );
         $this->app->bind(
-            'App\Repositories\Interfaces\Ordered_itemsInterface',
-            'App\Repositories\Ordered_itemsRepo'
+            'App\Repositories\Interfaces\OrderedItemsInterface',
+            'App\Repositories\OrderedItemsRepository'
         );
         $this->app->bind(
             'App\Repositories\Interfaces\PanierInterface',
-            'App\Repositories\PanierRepo'
+            'App\Repositories\PanierRepository'
         );
     }
 

@@ -8,17 +8,20 @@ use App\Models\Produit;
 use Illuminate\Http\Request;
 use App\Models\Ordered_items;
 use Illuminate\Support\Facades\Auth;
+use App\Repositories\Interfaces\ordersInterface;
 
 class OrderController extends Controller
 {
+    private $ordersInterface;
+
+    public function __construct(ordersInterface $ordersInterface)
+    {
+        $this->ordersInterface = $ordersInterface;
+    }
 
     public function index()
     {
-        $orders = Order::paginate(10);
-
-        // $userName = User::find(auth()->id());
-
-        // dd($userName);
+        $orders = $this->ordersInterface->index();
 
         return view('Admin.command', compact('orders'));
     }
@@ -42,33 +45,21 @@ class OrderController extends Controller
     public function create(Request $request)
     {
 
-        $test = session()->get('cart');
+        
+        // $this->validate($request, [
+        //     'user_id' => 'required|integer',
+        //     'produit_id' => 'required|integer',
+        //     'quantity' => 'required|integer',
+        //     'total_price' => 'required|numeric',
+        //     'status' => 'required|string|max:255',
+        // ]);
 
-        $orders = new Order();
-
+        $produit = session()->get('cart');
         $user = Auth::user();
-        $orders->status = "Pending";
-        $orders->adresse = $user->adress;
-        // dd($user->getRelations());
-        // $user->order()->associate($orders);
-        $orders->popo()->associate($user);
-        $orders->save();
-
-        foreach ($test as $key => $details) {
-            $produit = Produit::find($details['id']);
-            $ordered_items = new Ordered_items();
-            $ordered_items->order()->associate($orders);
-            $ordered_items->produit()->associate($produit);
-            $ordered_items->quantiter = $details['quantity'];
-            $ordered_items->prix = $produit->prix;
-            $ordered_items->save();
-            // $produit->quantiter -= $details['quantity'];
-            $produit->quantiter -= $details['quantity'];
-            $produit->save();
-        }
 
 
-
+        $this->ordersInterface->create($request->all(), $produit, $user);
+        
         return redirect()->route('produitClient'); 
     }
 
@@ -77,45 +68,40 @@ class OrderController extends Controller
 
 
 
-    public function update(Request $request, Order $order)
-    {
-        $request->validate([
-            'user_id' => 'required|integer',
-            'produit_id' => 'required|integer',
-            'quantity' => 'required|integer',
-            'total_price' => 'required|numeric',
-            'status' => 'required|string|max:255',
-        ]);
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'user_id' => 'required|integer',
+    //         'produit_id' => 'required|integer',
+    //         'quantity' => 'required|integer',
+    //         'total_price' => 'required|numeric',
+    //         'status' => 'required|string|max:255',
+    //     ]);
 
-        $order->update($request->all());
+    //     $this->ordersInterface->update($request->all(), $id);
 
-        return redirect()->route('orders.index');
-    }
+    //     return redirect()->route('orders.index');
+    // }
 
 
-    public function delete(Order $order)
-    {
-        $order->delete();
-        return redirect()->route('orders.index');
-    }
+    // public function delete(Order $order)
+    // {
+    //     $order->delete();
+    //     return redirect()->route('orders.index');
+    // }
 
 
 
     public function orderDetails(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer|exists:orders,id',
+        ]);
+        
+
         // dd($request['id']);
-        $orders = Order::find($request['id']);
-
-        $ordered_items = Ordered_items::where('order_id', $request['id'])->get();
-        // dd($ordered_items);
-
-        $product = [];
-        // $quantity = [];
-        foreach ($ordered_items as $key => $value) {
-
-            array_push($product, Produit::find($value['product_id']));
-        }
-
+        $orders = $this->ordersInterface->findById($request['id']);
+        $product = $this->ordersInterface->orderDetails($request->all());
 
 
 
@@ -125,12 +111,14 @@ class OrderController extends Controller
 
     public function updateStatus(Request $request,$id)
     {
+        $request->validate([
+            'status' => 'required|string|max:255',
+        ]);
 
-        $order = Order::find($id);
+        ;
 
         // dd($order);
-        $order->status = $request->input('status');
-        $order->save();
+        $this->ordersInterface->updateStatus($request->all(), $id);
 
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }

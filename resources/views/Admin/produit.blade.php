@@ -636,7 +636,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="productSalePrice" class="form-label">Prix promotionnel (DH)</label>
-                                <input type="number" class="form-control" id="productSalePrice">
+                                <input type="number" name="promotion" class="form-control" id="productSalePrice">
                             </div>
                             <div class="col-md-6">
                                 <label for="productStock" class="form-label">Quantity</label>

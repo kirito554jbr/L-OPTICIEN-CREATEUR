@@ -14,7 +14,7 @@ class AddColumnToUsers extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string("adress")->nullable();
+            $table->string('adresse')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnToUsers extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn("adress");
+            $table->dropColumn('adresse');
         });
     }
 }

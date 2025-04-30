@@ -512,11 +512,11 @@
                                             </td>
 
                                             <td>{{ $rendez->user->email }}</td>
-                                            <td>{{ $rendez->created_at }}</td>
+                                            <td>{{ $rendez->date }}</td>
                                             <td class="product-actions">
                                                 <button class="btn btn-sm btn-outline-primary me-1"
                                                     data-bs-toggle="modal" data-bs-target="#editProductModal"
-                                                    onclick="showinfowithmodal('{{ $rendez->id }}', '{{ $rendez->user->email }}', '{{ $rendez->description }} ')">
+                                                    onclick="showinfowithmodal('{{ $rendez->id }}', '{{ $rendez->user->email }}', '{{ $rendez->description }} ', '{{ $rendez->date }}')">
                                                     <i class="bi bi-pencil"></i>
                                                 </button>
 
@@ -590,6 +590,11 @@
                                 <input type="text" class="form-control" name="description" id="productName"
                                     required>
                             </div>
+                            <div class="col-md-6">
+                                <label for="rendez-vous-date" class="form-label">date</label>
+                                <input type="text" class="form-control" name="date" id="rendez-vous-date"
+                                    required>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -616,13 +621,18 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="editProductName" class="form-label">email</label>
-                                <input type="text" class="form-control" name="email" id="editCategorieName"
-                                    value="Danien Classic" required>
+                                <input type="text" class="form-control" name="email" id="email"
+                                     required>
                             </div>
                             <div class="col-md-6">
                                 <label for="editProductName" class="form-label">Description</label>
                                 <input type="text" class="form-control" name="description" id="description"
-                                    value="Danien Classic" required>
+                                     required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="editdate" class="form-label">Date</label>
+                                <input type="text" class="form-control" name="date" id="date"
+                                     required>
                             </div>
                         </div>
                 </div>
@@ -640,64 +650,11 @@
 
     <!-- Main JS File -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Toggle Sidebar
-            const toggleSidebar = document.getElementById('toggleSidebar');
-            const sidebar = document.getElementById('sidebar');
-
-            if (toggleSidebar) {
-                toggleSidebar.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
-                });
-            }
-
-            // Select All Products Checkbox
-            const selectAllProducts = document.getElementById('selectAllProducts');
-            const productCheckboxes = document.querySelectorAll(
-                '.product-table .form-check-input:not(#selectAllProducts)');
-
-            if (selectAllProducts) {
-                selectAllProducts.addEventListener('change', function() {
-                    productCheckboxes.forEach(checkbox => {
-                        checkbox.checked = selectAllProducts.checked;
-                    });
-                });
-            }
-
-            // Check if all checkboxes are checked
-            function updateSelectAllCheckbox() {
-                let allChecked = true;
-                productCheckboxes.forEach(checkbox => {
-                    if (!checkbox.checked) {
-                        allChecked = false;
-                    }
-                });
-
-                if (selectAllProducts) {
-                    selectAllProducts.checked = allChecked;
-                }
-            }
-
-            // Add event listeners to product checkboxes
-            productCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateSelectAllCheckbox);
-            });
-
-            // Close sidebar when clicking outside on mobile
-            document.addEventListener('click', function(event) {
-                if (window.innerWidth < 992 && sidebar.classList.contains('show')) {
-                    if (!sidebar.contains(event.target) && event.target !== toggleSidebar) {
-                        sidebar.classList.remove('show');
-                    }
-                }
-            });
-        });
-
-
-        function showinfowithmodal(id, email, description) {
+        function showinfowithmodal(id, email, description, date) {
             //   document.getElementById('productId').value = id;
-            document.getElementById('editCategorieName').value = email;
+            document.getElementById('email').value = email;
             document.getElementById('description').value = description;
+            document.getElementById('date').value = date;
             document.getElementById('addAction').action = '/rendezVous/update/' + id;
         }
     </script>

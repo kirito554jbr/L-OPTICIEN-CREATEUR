@@ -36,19 +36,20 @@ Route::get('/', function () {
 // });
 
 
-Route::get('/charge', function () {
-    return view('Client.charge');
-});
+
 
 
 // Route::get('/dashboardAdmin', function () {
 //     return view('Admin.dashboard');
 // });
-Route::get('/dashboardAdmin', [AdminController::class, 'ashboard'])->name('dashboardAdmin');
+Route::get('/dashboardAdmin', [AdminController::class, 'ashboard'])->name('dashboardAdmin')->middleware('role:Admin');
 
+Route::get('/unauthorized', function () {
+    return view('errors.unauthorized'); // You can customize this view
+});
 
 Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-Route::post('/profileImage', [UserController::class, 'updateProifileImage'])->name('profileImage');
+Route::post('/profileImage', [UserController::class, 'updateProfileImage'])->name('profileImage');
 
 
 Route::get('/produitAdmin', function () {
@@ -82,7 +83,7 @@ Route::controller(AuthController::class)->group(function () {
 Route::get('/role/create', [RoleController::class, 'create']);
 
 Route::controller(UserController::class)->group(function () {
-    Route::get('/users', 'index')->name('users');
+    Route::get('/users', 'index')->name('users')->middleware('role:Admin');
     Route::post('/users/create', 'create')->name('user.create');
     Route::post('/users/update/{id}', 'update')->name('user.update');
     Route::post('/users/profileUpdate/{id}', 'profileUpdate')->name('profile.update');
@@ -93,7 +94,7 @@ Route::controller(UserController::class)->group(function () {
 
 
 
-Route::controller(ProduitController::class)->group(function () {
+Route::controller(ProduitController::class)->middleware('role:Admin')->group(function () {
     Route::get('/produitAdmin', 'index')->name('produitAdmin');
     Route::post('/produitAdmin/create', 'create')->name('produit.create');
     Route::post('/produitAdmin/update/{id}', 'update')->name('produit.update');
@@ -113,15 +114,15 @@ Route::controller(ProduitController::class)->group(function () {
 
 Route::controller(CategorieController::class)->group(function () {
     Route::get('/categorie', 'index')->name('categorie');
-    Route::post('/categorie/create', 'create')->name('categorie.create');
-    Route::post('/categorie/update/{id}', 'update')->name('categorie.update');
-    Route::post('/categorie/delete/{id}', 'delete')->name('categorie.delete');
+    Route::post('/categorie/create', 'create')->name('categorie.create')->middleware('role:Admin');
+    Route::post('/categorie/update/{id}', 'update')->name('categorie.update')->middleware('role:Admin');
+    Route::post('/categorie/delete/{id}', 'delete')->name('categorie.delete')->middleware('role:Admin');
 });
 
 
 
 Route::controller(RendezVousController::class)->group(function () {
-    Route::get('/rendezVous', 'index')->name('rendezVous');
+    Route::get('/rendezVous', 'index')->name('rendezVous')->middleware('role:Admin');
     Route::get('/rendez_vous', 'ClientIndex')->name('ClientIndex');
     Route::post('/rendezVous/create', 'create')->name('rendezVous.create');
     Route::post('/rendezVous/update/{id}', 'update')->name('rendezVous.update');
@@ -137,9 +138,9 @@ Route::delete('remove-from-cart/{id}', [ProduitController::class, 'remove'])->na
 Route::delete('remove-from-cart-all', [ProduitController::class, 'removeAll'])->name('remove.from.cart.all');
 
 Route::controller(OrderController::class)->group(function () {
-    Route::get('/orders',  'index')->middleware('auth');
+    Route::get('/orders',  'index')->middleware('role:Admin');
     Route::get('/orders/create', 'create')->name('order.create');
-    Route::get('/AdminOrders',  'Adminindex')->middleware(['auth']);
+    Route::get('/AdminOrders',  'Adminindex')->middleware('role:Admin');
     Route::get('/details/{id}',  'orderDetails');
     Route::put('/orders/{id}/updateStatus', 'updateStatus')->name("orders.updateStatus");
 });
@@ -148,7 +149,7 @@ Route::controller(OrderController::class)->group(function () {
 
 Route::get('/checkout', [StripeController::class, 'checkout'])->name('checkout');
 Route::post('/session', [StripeController::class, 'session'])->name('session');
-Route::get('/success', [StripeController::class, 'success'])->name('success');  
+Route::get('/success', [StripeController::class, 'success'])->name('success');
 
 
 

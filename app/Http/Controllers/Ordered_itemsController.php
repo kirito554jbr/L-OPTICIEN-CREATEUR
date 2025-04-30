@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ordered_items;
 use Illuminate\Http\Request;
+use App\Models\Ordered_items;
+use App\Repositories\Interfaces\OrderedItemsInterface;
 
 class Ordered_itemsController extends Controller
 {
+    private $orderedItemsInterface;
     
+    public function __construct(OrderedItemsInterface $orderedItemsInterface)
+    {
+        $this->orderedItemsInterface = $orderedItemsInterface;
+    }
+
+
     public function index()
     {
-        $ordered_items = Ordered_items::all();
+        $ordered_items = $this->orderedItemsInterface->index();
         return view('Admin.ordered_items', compact('ordered_items'));
     }
 
@@ -28,7 +36,7 @@ class Ordered_itemsController extends Controller
     
 
     
-    public function update(Request $request, Ordered_items $ordered_items)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'quantity' => 'required|integer|min:1',
@@ -36,15 +44,15 @@ class Ordered_itemsController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        $ordered_items->update($request->all());
+        // $ordered_items->update($request->all());
 
         return redirect()->route('ordered_items.index');
     }
 
    
-    public function delet(Ordered_items $ordered_items)
+    public function delet($id)
     {
-        $ordered_items->delete();
+        // $ordered_items->delete();
         return redirect()->route('ordered_items.index');
     }
 }

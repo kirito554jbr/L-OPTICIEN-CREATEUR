@@ -211,7 +211,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/users">
                   <i class="bi bi-people"></i> Clients
                 </a>
               </li>

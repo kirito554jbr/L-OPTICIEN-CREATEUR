@@ -6,64 +6,67 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Repositories\Interfaces\RoleInterface;
+use App\Repositories\Interfaces\UserInterface;
 
 class UserController extends Controller
 {
-    
-    public function index(Request $request){
-        $users = User::all();
+    private $userInterface;
+    private $roleInterface;
 
-        $roles = Role::all();
+    public function __construct(UserInterface $userInterface, RoleInterface $roleInterface)
+    {
+        $this->userInterface = $userInterface;
+        $this->roleInterface = $roleInterface;
+    }
+    
+    public function index(){
+        $users = $this->userInterface->index();
+
+        $roles = $this->roleInterface->index();
         return view('Admin.users', compact('users', 'roles'));
     }
 
     public function create(Request $request){
 
-        $role = Role::where('name', $request['role'])->first();
+        $validate = $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'email' => 'required|string|email',
+            'phone' => 'required|string',
+            'image' => 'required|string',
+            'adress' => 'required|string',
+            'password' => 'required|string|min:8',
+            'role' => 'required|string'
+        ]);
+        // dd($validate);
+        $this->userInterface->create($request->all());
 
-
-        $user = new User();
-        $user->firstName = $request->input('firstName');
-        $user->lastName = $request->input('lastName');
-        $user->email = $request->input('email');
-        $user->phone = $request->input('phone');
-        $user->image = $request->input('image');
-        $user->adress = $request->input("adress");
-        $user->password = bcrypt($request->input('password'));
-        $user->role()->associate($role);
-        $user->save();
         return redirect("users")->with('success', 'Utilisateur ajouté avec succès');
     }
 
     public function update(Request $request, $id){
-        $user = User::find($id);
-        $role = Role::where('name', $request['role'])->first();
+        
+        $validate = $request->validate([
+            'firstName' => 'required|string',
+            'lastName' => 'required|string',
+            'email' => 'required|string|email',
+            'phone' => 'required|string',
+            'image' => 'required|string',
+            'adress' => 'required|string',
+            'role' => 'required|string'
+        ]);
 
-        if(!$user){
-            return redirect()->route('users')->with('Utilisateur non trouvé');
-        }
-        $user->firstName = $request->input('firstName');
-        $user->lastName = $request->input('lastName');
-        $user->email = $request->input('email');
-        $user->phone = $request->input('phone');
-        $user->image = $request->input('image');
-        $user->adress = $request->input('adress');
-        $user->password = bcrypt($request->input('password'));
-        $user->role()->associate($role);
-        $user->save();
+        $this->userInterface->update($request->all(), $id);
         return redirect()->route('users')->with('Utilisateur mis à jour avec succès');
     }
 
     public function delete(Request $request, $id){
-        $user = User::find($id);
-        if(!$user){
-            return redirect()->route('users')->with('Utilisateur non trouvé');
-        }
-        $user->delete();
+        $this->userInterface->delete($id);
         return redirect()->route('users')->with('Utilisateur supprimé avec succès');
     }
 
-    public function profile(Request $request){
+    public function profile(){
         $AuthUser = auth()->user();
         $user = User::find($AuthUser->id);
 
@@ -71,7 +74,7 @@ class UserController extends Controller
         return view('Client.profile', compact('user'));
     }
 
-    public function updateProifileImage(Request $request){
+    public function updateProfileImage(Request $request){
         $user = auth()->user();
         // dd($user->id);
 
@@ -104,7 +107,7 @@ class UserController extends Controller
             $AuthUser->lastName = $request->input('lastName');
             $AuthUser->email = $request->input('email');
             $AuthUser->phone = $request->input('phone');
-            $AuthUser->adress = $request->input('adress');
+            $AuthUser->adresse = $request->input('adress');
             $AuthUser->save();
             
             return redirect()->back()->with('success', 'profil mise à jour avec succès');
