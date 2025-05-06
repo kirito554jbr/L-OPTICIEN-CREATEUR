@@ -206,34 +206,30 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/users">
                   <i class="bi bi-cart"></i> Commandes
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/users">
                   <i class="bi bi-people"></i> Clients
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/rendezVous">
                   <i class="bi bi-calendar-event"></i> Rendez-vous
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <i class="bi bi-gear"></i> Paramètres
+                <a class="nav-link" href="/categorie" >
+                  <i class="bi bi-gear"></i> Category
                 </a>
               </li>
               <hr class="my-3" />
               
+              
               <li class="nav-item">
-                <a href="index.html" class="nav-link">
-                  <i class="bi bi-arrow-left-circle"></i>Retour au site
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link text-danger">
+                <a href="/logout" class="nav-link text-danger">
                   <i class="bi bi-box-arrow-right"></i>Déconnexion
                 </a>
               </li>
@@ -251,14 +247,7 @@
               </button>
 
               <div class="d-flex align-items-center ms-auto">
-                <div class="position-relative me-3">
-                  <i class="bi bi-bell fs-5"></i>
-                  <span class="notification-badge">3</span>
-                </div>
-                <div class="position-relative me-3">
-                  <i class="bi bi-envelope fs-5"></i>
-                  <span class="notification-badge">5</span>
-                </div>
+
                 <div class="dropdown">
                   <a
                     href="#"
@@ -268,7 +257,7 @@
                     aria-expanded="false"
                   >
                     <img
-                      src="/placeholder.svg?height=40&width=40"
+                      src="{{ auth()->user()->image }}"
                       alt="Admin"
                       class="avatar me-2"
                     />
@@ -284,13 +273,13 @@
                       >
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#"
-                        ><i class="bi bi-gear me-2"></i> Paramètres</a
+                      <a class="dropdown-item" href="/rendezVous"
+                        ><i class="bi bi-gear me-2"></i> Rendez-vous</a
                       >
                     </li>
                     <li><hr class="dropdown-divider" /></li>
                     <li>
-                      <a class="dropdown-item text-danger" href="#"
+                      <a class="dropdown-item text-danger" href="/logout"
                         ><i class="bi bi-box-arrow-right"></i> Déconnexion</a
                       >
                     </li>
@@ -405,25 +394,7 @@
             </div>
 
             <!-- Charts -->
-            <div class="row mb-4">
-              <div class="col-lg-8 mb-3">
-                <div class="card fade-in delay-1">
-                  <div class="card-body p-4">
-                    <h5 class="card-title">Ventes mensuelles</h5>
-                    <div class="chart-container" id="salesChart"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-4 mb-3">
-                <div class="card fade-in delay-2">
-                  <div class="card-body p-4">
-                    <h5 class="card-title">Catégories de produits</h5>
-                    <div class="chart-container" id="categoriesChart"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
 
             <!-- Recent Orders -->
             <div class="row mb-4">
@@ -434,7 +405,7 @@
                       class="d-flex justify-content-between align-items-center mb-3"
                     >
                       <h5 class="card-title mb-0">Commandes récentes</h5>
-                      <a href="#" class="btn btn-sm btn-primary">Voir tout</a>
+                      <a href="/orders" class="btn btn-sm btn-primary">Voir tout</a>
                     </div>
                     <div class="table-responsive">
                       <table class="table table-hover">
@@ -442,83 +413,41 @@
                           <tr>
                             <th>ID</th>
                             <th>Client</th>
-                            <th>Produit</th>
                             <th>Date</th>
-                            <th>Montant</th>
                             <th>Statut</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
+                          @foreach ($orders as $order)
                           <tr>
-                            <td>#ORD-001</td>
+                            <td>#ORD-00{{ $order->id }}</td>
                             <td>
                               <div class="d-flex align-items-center">
                                 <img
-                                  src="/placeholder.svg?height=40&width=40"
+                                  src="{{ $order->popo->image}}"
                                   class="avatar me-2"
                                   alt="Client"
                                 />
                                 <div>
-                                  <h6 class="mb-0">Sophie Martin</h6>
+                                  <h6 class="mb-0">{{ $order->popo->firstName}}</h6>
                                   <small class="text-muted"
-                                    >sophie@example.com</small
+                                    >{{ $order->popo->email}}</small
                                   >
                                 </div>
                               </div>
                             </td>
-                            <td>Lunettes Ray-Ban</td>
-                            <td>14 Mar 2025</td>
-                            <td>€245.00</td>
-                            <td><span class="badge bg-success">Livré</span></td>
+                            <td>{{ $order->created_at->format('d-m-Y')}}</td>
                             <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>#ORD-002</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Thomas Dubois</h6>
-                                  <small class="text-muted"
-                                    >thomas@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Lunettes de soleil Dior</td>
-                            <td>13 Mar 2025</td>
-                            <td>€320.00</td>
-                            <td>
-                              <span class="badge bg-warning text-dark"
-                                >En cours</span
-                              >
+                              @if ($order->status == 'Accepted')
+                              <span class="badge bg-success">{{ $order->status }}</span>
+                              @elseif ($order->status == 'Rejected')
+                              <span class="badge bg-danger">{{ $order->status }}</span>
+                              @elseif ($order->status == 'Pending')
+                              <span class="badge bg-warning">{{ $order->status }}</span>
+                              @else
+                              <span class="badge bg-secondary">{{ $order->status }}</span>
+                              @endif
                             </td>
                             <td>
                               <div class="dropdown">
@@ -544,98 +473,8 @@
                               </div>
                             </td>
                           </tr>
-                          <tr>
-                            <td>#ORD-003</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Marie Leroy</h6>
-                                  <small class="text-muted"
-                                    >marie@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Monture Gucci</td>
-                            <td>12 Mar 2025</td>
-                            <td>€180.00</td>
-                            <td>
-                              <span class="badge bg-info">Préparation</span>
-                            </td>
-                            <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>#ORD-004</td>
-                            <td>
-                              <div class="d-flex align-items-center">
-                                <img
-                                  src="/placeholder.svg?height=40&width=40"
-                                  class="avatar me-2"
-                                  alt="Client"
-                                />
-                                <div>
-                                  <h6 class="mb-0">Pierre Moreau</h6>
-                                  <small class="text-muted"
-                                    >pierre@example.com</small
-                                  >
-                                </div>
-                              </div>
-                            </td>
-                            <td>Lentilles de contact</td>
-                            <td>11 Mar 2025</td>
-                            <td>€75.00</td>
-                            <td><span class="badge bg-success">Livré</span></td>
-                            <td>
-                              <div class="dropdown">
-                                <button
-                                  class="btn btn-sm"
-                                  type="button"
-                                  data-bs-toggle="dropdown"
-                                >
-                                  <i class="bi bi-three-dots-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Détails</a
-                                    >
-                                  </li>
-                                  <li>
-                                    <a class="dropdown-item" href="#"
-                                      >Modifier</a
-                                    >
-                                  </li>
-                                </ul>
-                              </div>
-                            </td>
-                          </tr>
+                          @endforeach
+                          
                         </tbody>
                       </table>
                     </div>
@@ -803,108 +642,8 @@
         // Check on scroll
         window.addEventListener("scroll", checkFade);
 
-        // Sales Chart
-        const salesCtx = document.getElementById("salesChart");
-        if (salesCtx) {
-          const salesChart = new Chart(salesCtx, {
-            type: "line",
-            data: {
-              labels: [
-                "Jan",
-                "Fév",
-                "Mar",
-                "Avr",
-                "Mai",
-                "Juin",
-                "Juil",
-                "Août",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Déc",
-              ],
-              datasets: [
-                {
-                  label: "Ventes 2025",
-                  data: [
-                    1500, 2000, 2500, 2200, 2700, 3000, 3200, 3500, 3700, 3900,
-                    4100, 4500,
-                  ],
-                  borderColor: "#0d6efd",
-                  backgroundColor: "rgba(13, 110, 253, 0.1)",
-                  tension: 0.3,
-                  fill: true,
-                },
-                {
-                  label: "Ventes 2024",
-                  data: [
-                    1200, 1800, 2200, 2000, 2500, 2700, 2900, 3100, 3300, 3500,
-                    3700, 4000,
-                  ],
-                  borderColor: "#6c757d",
-                  backgroundColor: "rgba(108, 117, 125, 0.1)",
-                  tension: 0.3,
-                  fill: true,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: "top",
-                },
-              },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  grid: {
-                    drawBorder: false,
-                  },
-                },
-                x: {
-                  grid: {
-                    display: false,
-                  },
-                },
-              },
-            },
-          });
-        }
-
-        // Categories Chart
-        const categoriesCtx = document.getElementById("categoriesChart");
-        if (categoriesCtx) {
-          const categoriesChart = new Chart(categoriesCtx, {
-            type: "doughnut",
-            data: {
-              labels: [
-                "Lunettes de vue",
-                "Lunettes de soleil",
-                "Lentilles",
-                "Accessoires",
-              ],
-              datasets: [
-                {
-                  data: [45, 30, 15, 10],
-                  backgroundColor: ["#0d6efd", "#6610f2", "#0dcaf0", "#6c757d"],
-                  borderWidth: 0,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: "bottom",
-                },
-              },
-              cutout: "70%",
-            },
-          });
-        }
+        
+        
       });
     </script>
   </body>

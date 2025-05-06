@@ -375,7 +375,7 @@
               <a class="nav-link" href="./service-details.html">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="produits.html">Produits</a>
+              <a class="nav-link" href="/ProduitClient">Produits</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#contact">Contact</a>
@@ -399,14 +399,15 @@
                 <div class="col-lg-6">
                   <div class="card-body">
                     <h2 class="text-center mb-4 fw-bold">Connexion</h2>
-                    <form class="needs-validation" novalidate>
+                    <form class="needs-validation" action="/login" method="POST" novalidate>
+                      @csrf
                       <div class="mb-4">
                         <label for="email" class="form-label">Email</label>
                         <div class="input-group">
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-envelope"></i>
                           </span>
-                          <input type="email" class="form-control bg-light border-start-0" id="email" placeholder="Entrez votre email" required>
+                          <input type="email" class="form-control bg-light border-start-0" id="email" name="email" placeholder="Entrez votre email" required>
                           <div class="invalid-feedback">
                             Veuillez entrer une adresse email valide.
                           </div>
@@ -418,7 +419,7 @@
                           <span class="input-group-text bg-light border-end-0">
                             <i class="bi bi-lock"></i>
                           </span>
-                          <input type="password" class="form-control bg-light border-start-0" id="password" placeholder="Entrez votre mot de passe" required>
+                          <input type="password" class="form-control bg-light border-start-0" id="password" name="password" placeholder="Entrez votre mot de passe" required>
                           <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword">
                             <i class="bi bi-eye"></i>
                           </button>
