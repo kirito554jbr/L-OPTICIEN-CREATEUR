@@ -387,7 +387,7 @@
       <div class="container">
         <!-- Logo and Brand -->
         <a href="index.html" class="navbar-brand d-flex align-items-center">
-          <img src="assets/img/logo1.png" alt="L'OPTICIEN CREATEUR Logo" width="60">
+          <img src="{{ asset('assets/' . 'logo1.png') }}" alt="L'OPTICIEN CREATEUR Logo" width="60">
           <span class="h3 mb-0 ms-2 fw-bold">L'OPTICIEN CREATEUR</span>
         </a>
         
@@ -432,7 +432,7 @@
             <div class="card auth-card">
               <div class="row g-0">
                 <div class="col-lg-6 auth-image">
-                  <img src="assets/img/register-image.svg" alt="Register" class="img-fluid" data-aos="zoom-in">
+                  <img src="{{ asset('assets/' . 'output.png') }}" alt="Register" class="img-fluid" data-aos="zoom-in">
                 </div>
                 <div class="col-lg-6">
                   <div class="card-body">

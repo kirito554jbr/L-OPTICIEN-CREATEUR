@@ -55,13 +55,14 @@ class RendezVousRepository implements RendezVousInterface
     public function create(array $request)
     {
         $user = $this->userInterface->findByEmail($request['email']);
-
+        
         $rendezVous = new RendezVous();
         $rendezVous->date = $request['date'] . ' ' . $request['time'];
         // dd($rendezVous->date);
         $rendezVous->description = $request['message'];
         $rendezVous->user()->associate($user);
         $rendezVous->save();
+        // dd($rendezVous);
     }
 
 

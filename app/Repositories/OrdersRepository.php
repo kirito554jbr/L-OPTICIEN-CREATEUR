@@ -101,4 +101,10 @@ class OrdersRepository implements ordersInterface
         $order = Order::find($id);
         return $order;
     }
+
+    public function UserOrders($id)
+    {
+        $orders = Order::where('client', $id)->get();
+        return $orders;
+    }
 }

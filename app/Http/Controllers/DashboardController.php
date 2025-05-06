@@ -16,6 +16,7 @@ class DashboardController extends Controller
         // $categories = Categorie::all();
         $users = User::all();
         $orders = Order::take(5)->get();
+        // dd($orders);
         $totalOrders = count($orders);
         $totalUsers = User::where('role_id', 2)->count();
         // $totalCategories = count($categories);

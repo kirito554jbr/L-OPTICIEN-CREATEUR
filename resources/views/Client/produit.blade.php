@@ -167,6 +167,96 @@
             }
         }
 
+        /* Animation */
+        @keyframes up-down {
+            0% {
+                transform: translateY(10px);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animated {
+            animation: up-down 2s ease-in-out infinite alternate-reverse both;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            overflow: hidden;
+            background-color: #fff;
+            transition: all 0.6s ease-out;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #preloader div {
+            width: 13px;
+            height: 13px;
+            background-color: var(--bs-primary);
+            border-radius: 50%;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+            position: absolute;
+            left: 50%;
+        }
+
+        #preloader div:nth-child(1) {
+            left: calc(50% + 8px);
+            animation: animate-preloader-1 0.6s infinite;
+        }
+
+        #preloader div:nth-child(2) {
+            left: calc(50% + 8px);
+            animation: animate-preloader-2 0.6s infinite;
+        }
+
+        #preloader div:nth-child(3) {
+            left: calc(50% + 32px);
+            animation: animate-preloader-2 0.6s infinite;
+        }
+
+        #preloader div:nth-child(4) {
+            left: calc(50% + 56px);
+            animation: animate-preloader-3 0.6s infinite;
+        }
+
+        @keyframes animate-preloader-1 {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes animate-preloader-3 {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes animate-preloader-2 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(24px, 0);
+            }
+        }
+
         /* Scroll Top */
         .scroll-top {
             position: fixed;
@@ -434,15 +524,15 @@
                                     </div>
                                 </div>
                             @endforeach
-                            
-                            @if(auth()->check())
+
+                            @if (auth()->check())
                                 <div class="text-center mt-2">
                                     <a href="cart" class="btn btn-primary w-100">View all</a>
                                 </div>
                             @else
-                                <p class="text-center text-muted">Please <a href="{{ route('Tologin') }}">log in</a> to view all items in your cart.</p>
+                                <p class="text-center text-muted">Please <a href="{{ route('Tologin') }}">log in</a>
+                                    to view all items in your cart.</p>
                             @endif
-                            
                         @else
                             <p class="text-center text-muted">Your cart is empty</p>
                         @endif
@@ -498,31 +588,41 @@
                         <div class="filter-buttons d-flex justify-content-center">
                             <form action="/ProduitClient">
                                 @csrf
-                                <button type="submit" class="btn filter-button mx-1 mb-2 {{ request()->is('ProduitClient') ? 'active' : '' }}" data-filter="*">Tous</button>
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->is('ProduitClient') ? 'active' : '' }}"
+                                    data-filter="*">Tous</button>
                             </form>
 
                             <form action="/filterPerCategorie" method="POST">
                                 @csrf
                                 <input type="hidden" name="categorie" value="Lunettes de Vue">
-                                <button type="submit" class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Vue' ? 'active' : '' }}" data-filter="lunettes-vue">Lunettes de Vue</button>
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Vue' ? 'active' : '' }}"
+                                    data-filter="lunettes-vue">Lunettes de Vue</button>
                             </form>
 
                             <form action="/filterPerCategorie" method="POST">
                                 @csrf
                                 <input type="hidden" name="categorie" value="Lunettes de Soleil">
-                                <button type="submit" class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Soleil' ? 'active' : '' }}" data-filter="lunettes-soleil">Lunettes de Soleil</button>
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Soleil' ? 'active' : '' }}"
+                                    data-filter="lunettes-soleil">Lunettes de Soleil</button>
                             </form>
 
                             <form action="/filterPerCategorie" method="POST">
                                 @csrf
                                 <input type="hidden" name="categorie" value="Lunettes de protection">
-                                <button type="submit" class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de protection' ? 'active' : '' }}" data-filter="lentilles">Lunettes de protection</button>
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de protection' ? 'active' : '' }}"
+                                    data-filter="lentilles">Lunettes de protection</button>
                             </form>
 
                             <form action="/filterPerCategorie" method="POST">
                                 @csrf
                                 <input type="hidden" name="categorie" value="Accessoires">
-                                <button type="submit" class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Accessoires' ? 'active' : '' }}" data-filter="accessoires">Accessoires</button>
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Accessoires' ? 'active' : '' }}"
+                                    data-filter="accessoires">Accessoires</button>
                             </form>
                         </div>
                     </div>
@@ -786,55 +886,13 @@
                     mirror: false
                 });
             });
-
-            /**
-             * Initiate Pure Counter 
-             */
-            // new PureCounter();
-
-            /**
-             * Initiate glightbox 
-             */
-            const glightbox = GLightbox({
-                selector: '.glightbox'
-            });
-
-            /**
-             * Product filtering
-             */
-            window.addEventListener('load', () => {
-                let productContainer = select('.products .row');
-                if (productContainer) {
-                    let productIsotope = new Isotope(productContainer, {
-                        itemSelector: '.product-item',
-                        layoutMode: 'fitRows'
-                    });
-
-                    let productFilters = select('.filter-buttons .filter-button', true);
-
-                    on('click', '.filter-button', function(e) {
-                        e.preventDefault();
-                        productFilters.forEach(function(className) {
-                            className.classList.remove('active');
-                        });
-                        this.classList.add('active');
-
-                        let filterValue = this.getAttribute('data-filter');
-                        if (filterValue === '*') {
-                            productIsotope.arrange({
-                                filter: '*'
-                            });
-                        } else {
-                            productIsotope.arrange({
-                                filter: `.${filterValue}`
-                            });
-                        }
-                        AOS.refresh();
-                    }, true);
-                }
-            });
+            
 
         })();
+
+
+
+      
     </script>
 </body>
 

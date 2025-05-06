@@ -219,7 +219,7 @@
                 </ul>
             </div>
             
-            <div class="d-flex align-items-center">
+            <div class="d-flex ">
                 @guest
                     <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
                     <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
@@ -310,7 +310,14 @@
                 <label for="message">Message</label>
                 <textarea name="message"  id="message" rows="4" placeholder="Ajoutez un message si nécessaire"></textarea>
 
-                <button type="submit">Réserver</button>
+                @auth
+                    <button type="submit">Réserver</button>
+                @else
+                    <div class="alert alert-warning mt-3">
+                        Vous devez être connecté pour réserver un rendez-vous.
+                    </div>
+                    <a href="{{ route('Tologin') }}" class="btn btn-primary">Se connecter</a>
+                @endauth
             </form>
         </div>
     </div>

@@ -405,7 +405,7 @@
                       class="d-flex justify-content-between align-items-center mb-3"
                     >
                       <h5 class="card-title mb-0">Commandes récentes</h5>
-                      <a href="#" class="btn btn-sm btn-primary">Voir tout</a>
+                      <a href="/orders" class="btn btn-sm btn-primary">Voir tout</a>
                     </div>
                     <div class="table-responsive">
                       <table class="table table-hover">
@@ -413,36 +413,42 @@
                           <tr>
                             <th>ID</th>
                             <th>Client</th>
-                            <th>Produit</th>
                             <th>Date</th>
-                            <th>Montant</th>
                             <th>Statut</th>
                             <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                          
+                          @foreach ($orders as $order)
                           <tr>
-                            <td>#ORD-001</td>
+                            <td>#ORD-00{{ $order->id }}</td>
                             <td>
                               <div class="d-flex align-items-center">
                                 <img
-                                  src="/placeholder.svg?height=40&width=40"
+                                  src="{{ $order->popo->image}}"
                                   class="avatar me-2"
                                   alt="Client"
                                 />
                                 <div>
-                                  <h6 class="mb-0">Sophie Martin</h6>
+                                  <h6 class="mb-0">{{ $order->popo->firstName}}</h6>
                                   <small class="text-muted"
-                                    >sophie@example.com</small
+                                    >{{ $order->popo->email}}</small
                                   >
                                 </div>
                               </div>
                             </td>
-                            <td>Lunettes Ray-Ban</td>
-                            <td>14 Mar 2025</td>
-                            <td>€245.00</td>
-                            <td><span class="badge bg-success">Livré</span></td>
+                            <td>{{ $order->created_at->format('d-m-Y')}}</td>
+                            <td>
+                              @if ($order->status == 'Accepted')
+                              <span class="badge bg-success">{{ $order->status }}</span>
+                              @elseif ($order->status == 'Rejected')
+                              <span class="badge bg-danger">{{ $order->status }}</span>
+                              @elseif ($order->status == 'Pending')
+                              <span class="badge bg-warning">{{ $order->status }}</span>
+                              @else
+                              <span class="badge bg-secondary">{{ $order->status }}</span>
+                              @endif
+                            </td>
                             <td>
                               <div class="dropdown">
                                 <button
@@ -467,6 +473,7 @@
                               </div>
                             </td>
                           </tr>
+                          @endforeach
                           
                         </tbody>
                       </table>
@@ -635,108 +642,8 @@
         // Check on scroll
         window.addEventListener("scroll", checkFade);
 
-        // Sales Chart
-        const salesCtx = document.getElementById("salesChart");
-        if (salesCtx) {
-          const salesChart = new Chart(salesCtx, {
-            type: "line",
-            data: {
-              labels: [
-                "Jan",
-                "Fév",
-                "Mar",
-                "Avr",
-                "Mai",
-                "Juin",
-                "Juil",
-                "Août",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Déc",
-              ],
-              datasets: [
-                {
-                  label: "Ventes 2025",
-                  data: [
-                    1500, 2000, 2500, 2200, 2700, 3000, 3200, 3500, 3700, 3900,
-                    4100, 4500,
-                  ],
-                  borderColor: "#0d6efd",
-                  backgroundColor: "rgba(13, 110, 253, 0.1)",
-                  tension: 0.3,
-                  fill: true,
-                },
-                {
-                  label: "Ventes 2024",
-                  data: [
-                    1200, 1800, 2200, 2000, 2500, 2700, 2900, 3100, 3300, 3500,
-                    3700, 4000,
-                  ],
-                  borderColor: "#6c757d",
-                  backgroundColor: "rgba(108, 117, 125, 0.1)",
-                  tension: 0.3,
-                  fill: true,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: "top",
-                },
-              },
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  grid: {
-                    drawBorder: false,
-                  },
-                },
-                x: {
-                  grid: {
-                    display: false,
-                  },
-                },
-              },
-            },
-          });
-        }
-
-        // Categories Chart
-        const categoriesCtx = document.getElementById("categoriesChart");
-        if (categoriesCtx) {
-          const categoriesChart = new Chart(categoriesCtx, {
-            type: "doughnut",
-            data: {
-              labels: [
-                "Lunettes de vue",
-                "Lunettes de soleil",
-                "Lentilles",
-                "Accessoires",
-              ],
-              datasets: [
-                {
-                  data: [45, 30, 15, 10],
-                  backgroundColor: ["#0d6efd", "#6610f2", "#0dcaf0", "#6c757d"],
-                  borderWidth: 0,
-                },
-              ],
-            },
-            options: {
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: {
-                  position: "bottom",
-                },
-              },
-              cutout: "70%",
-            },
-          });
-        }
+        
+        
       });
     </script>
   </body>

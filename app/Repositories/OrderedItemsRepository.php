@@ -19,20 +19,6 @@ class OrderedItemsRepository implements OrderedItemsInterface
     }
 
 
-    // public function index()
-    // {
-    //     return $ordered_items = Ordered_items::all();
-    // }
-
-    // public function create(array $request)
-    // {
-    //     $ordered_items = new Ordered_items();
-    //     $ordered_items->quantiter = $request['quantity'];
-    //     $ordered_items->produit_id()->associate($request['produit_id']);
-    //     $ordered_items->user_id()->associate($request['user_id']);
-    //     $ordered_items->save();
-    // }
-
     public function index(){
 
     }

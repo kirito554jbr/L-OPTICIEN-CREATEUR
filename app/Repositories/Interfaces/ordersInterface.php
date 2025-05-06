@@ -12,4 +12,5 @@ interface ordersInterface
     public function findById($id);
     public function orderDetails(array $request);
     public function updateStatus(array $request, $id);
+    public function UserOrders($id);
 }

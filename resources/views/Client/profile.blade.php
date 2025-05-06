@@ -197,8 +197,13 @@
             </div>
             <div class="profile-card">
                 <h2>Account Settings</h2>
-                <a href="/" class="btn">retour à la page d'accueil</a>
-                <a  type="button" id="buttonChangePassword" class="btn">Change Password</a>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <a href="/" class="btn">retour à la page d'accueil</a>
+                        <a  type="button" id="buttonChangePassword" class="btn">Change Password</a>
+                    </div>
+                    <a href="/client/commend/{{ $user->id }}" class="btn">Go to Commend Page</a>
+            </div>
             </div>
 
                 @if(session('error'))

@@ -45,11 +45,11 @@ Route::get('/', function () {
 Route::get('/dashboardAdmin', [AdminController::class, 'ashboard'])->name('dashboardAdmin')->middleware('role:Admin');
 
 Route::get('/unauthorized', function () {
-    return view('errors.unauthorized'); // You can customize this view
+    return view('errors.unauthorized');
 });
 
-Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-Route::post('/profileImage', [UserController::class, 'updateProfileImage'])->name('profileImage');
+// Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+// Route::post('/profileImage', [UserController::class, 'updateProfileImage'])->name('profileImage');
 
 
 Route::get('/produitAdmin', function () {
@@ -86,9 +86,12 @@ Route::controller(UserController::class)->group(function () {
     Route::get('/users', 'index')->name('users')->middleware('role:Admin');
     Route::post('/users/create', 'create')->name('user.create');
     Route::post('/users/update/{id}', 'update')->name('user.update');
+    Route::get('/profile', 'profile')->name('profile')->middleware('auth');
+    Route::post('/profileImage', 'updateProfileImage')->name('profileImage');
     Route::post('/users/profileUpdate/{id}', 'profileUpdate')->name('profile.update');
     Route::post('/users/passwordUpdate/{id}', 'passwordUpdate')->name('passsword.update');
-    Route::post('/users/delete/{id}', 'delete')->name('user.delete');
+    Route::post('/users/delete/{id}', 'delete')->name('user.delete')->middleware('role:Admin');
+    
 });
 
 
@@ -124,7 +127,7 @@ Route::controller(CategorieController::class)->group(function () {
 Route::controller(RendezVousController::class)->group(function () {
     Route::get('/rendezVous', 'index')->name('rendezVous')->middleware('role:Admin');
     Route::get('/rendez_vous', 'ClientIndex')->name('ClientIndex');
-    Route::post('/rendezVous/create', 'create')->name('rendezVous.create');
+    Route::post('/rendezVous/create', 'create')->name('rendezVous.create')->middleware('auth');
     Route::post('/rendezVous/update/{id}', 'update')->name('rendezVous.update');
     Route::post('/rendezVous/delete/{id}', 'delete')->name('rendezVous.delete');
 });
@@ -143,6 +146,7 @@ Route::controller(OrderController::class)->group(function () {
     Route::get('/AdminOrders',  'Adminindex')->middleware('role:Admin');
     Route::get('/details/{id}',  'orderDetails');
     Route::put('/orders/{id}/updateStatus', 'updateStatus')->name("orders.updateStatus");
+    Route::get('/client/commend/{id}', 'UserOrders')->name('client.orders');
 });
 
 

@@ -123,4 +123,10 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Order status updated successfully.');
     }
 
+    public function UserOrders($id){
+        $orders = $this->ordersInterface->UserOrders($id);
+        // dd($orders);
+        return view('Client.myCommende', compact('orders'));
+    }
+
 }

@@ -60,20 +60,21 @@ class RendezVousController extends Controller
         if (!$user) {
             return redirect()->back()->with('notFound', 'Email not found');
         }
+        
 
         $dayOfWeek = $this->rendezVousInterface->carbon($request['date']);
 
         if ($dayOfWeek == "Sunday" || $dayOfWeek == "Saturday") {
             return redirect()->back()->with('error', 'this day is not available');
         }
-
+        
 
         $checkIfExist = $this->rendezVousInterface->checkIfExist($request['date'], $request['time']);
 
         if ($checkIfExist) {
             return redirect()->back()->with('exist', 'date not available');
         } else {
-
+            // dd($checkIfExist);
         $rendezVous = $this->rendezVousInterface->create($request->all());
 
             
