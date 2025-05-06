@@ -2,64 +2,131 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
+use App\Models\Produit;
 use Illuminate\Http\Request;
+use App\Models\Ordered_items;
+use Illuminate\Support\Facades\Auth;
+use App\Repositories\Interfaces\ordersInterface;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $ordersInterface;
+
+    public function __construct(ordersInterface $ordersInterface)
+    {
+        $this->ordersInterface = $ordersInterface;
+    }
+
     public function index()
     {
-        $orders = Order::all();
-        return view('Admin.orders', compact('orders'));
+        $orders = $this->ordersInterface->index();
+
+        return view('Admin.command', compact('orders'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    // public function Adminindex()
+    // {
+    //     $orders = Order::all();
+    //     // dd($orders);
+    //     // array_push($product, Product::find($value['product_id']));
+
+    //     $userName = User::find(auth()->id());
+    //     // $users = [];
+    //     foreach ($orders as $order) {
+    //         $user = User::find($order['user_id']);
+    //     };
+    //     return view('Admin.Adminorders', compact('orders'), compact('userName'));
+    // }
+
+
     public function create(Request $request)
     {
-        $order = new Order();
-        $order->user_id = $request->input('user_id');
-        $order->produit_id = $request->input('produit_id');
-        $order->quantity = $request->input('quantity');
-        $order->total_price = $request->input('total_price');
-        $order->status = 'pending';
-        $order->save();
 
-        return redirect()->route('orders.index');
+        
+        // $this->validate($request, [
+        //     'user_id' => 'required|integer',
+        //     'produit_id' => 'required|integer',
+        //     'quantity' => 'required|integer',
+        //     'total_price' => 'required|numeric',
+        //     'status' => 'required|string|max:255',
+        // ]);
+
+        $produit = session()->get('cart');
+        $user = Auth::user();
+
+
+        $this->ordersInterface->create($request->all(), $produit, $user);
+        
+        return redirect()->route('produitClient'); 
     }
-    
 
-    
 
-    
 
-    public function update(Request $request, Order $order)
+
+
+
+    // public function update(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'user_id' => 'required|integer',
+    //         'produit_id' => 'required|integer',
+    //         'quantity' => 'required|integer',
+    //         'total_price' => 'required|numeric',
+    //         'status' => 'required|string|max:255',
+    //     ]);
+
+    //     $this->ordersInterface->update($request->all(), $id);
+
+    //     return redirect()->route('orders.index');
+    // }
+
+
+    // public function delete(Order $order)
+    // {
+    //     $order->delete();
+    //     return redirect()->route('orders.index');
+    // }
+
+
+
+    public function orderDetails(Request $request)
     {
         $request->validate([
-            'user_id' => 'required|integer',
-            'produit_id' => 'required|integer',
-            'quantity' => 'required|integer',
-            'total_price' => 'required|numeric',
+            'id' => 'required|integer|exists:orders,id',
+        ]);
+        
+
+        // dd($request['id']);
+        $orders = $this->ordersInterface->findById($request['id']);
+        $product = $this->ordersInterface->orderDetails($request->all());
+
+
+
+        return view('Client.orderDetails', compact('orders'), compact('product'));
+    }
+
+
+    public function updateStatus(Request $request,$id)
+    {
+        $request->validate([
             'status' => 'required|string|max:255',
         ]);
 
-        $order->update($request->all());
+        ;
 
-        return redirect()->route('orders.index');
+        // dd($order);
+        $this->ordersInterface->updateStatus($request->all(), $id);
+
+        return redirect()->back()->with('success', 'Order status updated successfully.');
     }
 
-   
-    public function delete(Order $order)
-    {
-        $order->delete();
-        return redirect()->route('orders.index');
+    public function UserOrders($id){
+        $orders = $this->ordersInterface->UserOrders($id);
+        // dd($orders);
+        return view('Client.myCommende', compact('orders'));
     }
+
 }

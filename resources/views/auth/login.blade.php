@@ -375,7 +375,7 @@
               <a class="nav-link" href="./service-details.html">Services</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="produits.html">Produits</a>
+              <a class="nav-link" href="/ProduitClient">Produits</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="index.html#contact">Contact</a>

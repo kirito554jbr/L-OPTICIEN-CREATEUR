@@ -10,6 +10,39 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
+ /* Scroll Top */
+ .scroll-top {
+      position: fixed;
+      visibility: hidden;
+      opacity: 0;
+      right: 15px;
+      bottom: 15px;
+      z-index: 99999;
+      background-color: var(--bs-primary);
+      width: 40px;
+      height: 40px;
+      border-radius: 4px;
+      transition: all 0.4s;
+    }
+    
+    .scroll-top i {
+      font-size: 24px;
+      color: #fff;
+      line-height: 0;
+    }
+    
+    .scroll-top:hover {
+      background-color: rgba(var(--bs-primary-rgb), 0.8);
+    }
+    
+    .scroll-top.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+
+
+
         /* Custom Styles */
         .fade-in {
             opacity: 0;
@@ -96,6 +129,41 @@
             opacity: 1;
             transform: translateX(0);
         }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f6f5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4747e0;
+        }
+
+      
+
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #ccc;
+            border-top-color: #4747e0;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -103,7 +171,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
         <div class="container">
-            <a href="index.html" class="navbar-brand d-flex align-items-center">
+            <a href="/" class="navbar-brand d-flex align-items-center">
                 <img src="{{ asset('assets/' . 'logo1.png') }}" alt="Logo" width="60">
                 <h1 class="h3 mb-0 ms-2">L'OPTICIEN CREATEUR</h1>
             </a>
@@ -125,7 +193,7 @@
                         <a class="nav-link" href="/ProduitClient">Produits</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#catalog">Catalogue</a>
+                        <a class="nav-link" href="/rendez_vous">Rendez-vous</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
@@ -133,17 +201,23 @@
                 </ul>
             </div>
             <div class="d-flex">
-                <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
-                <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                        Mon Compte
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="">Profil</a></li>
-                        <li><a class="dropdown-item" href="">Se déconnecter</a></li>
-                    </ul>
-                </div>
+                @guest
+                    <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
+                    <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
+                @endguest
+                @auth
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Mon Compte
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                            <li><a class="dropdown-item" href="/clientRendezVous">Mes Rendez-vous</a></li>
+                            <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                        </ul>
+                    </div>
+                @endauth
             </div>
         </div>
     </nav>
@@ -267,19 +341,24 @@
         <div class="container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-4 col-md-2 mb-4 mb-md-0">
-                    <img src="{{ asset('assets/' . 'client-1.png') }}" alt="Partner 1" class="img-fluid partner-logo">
+                    <img src="{{ asset('assets/' . 'client-1.png') }}" alt="Partner 1"
+                        class="img-fluid partner-logo">
                 </div>
                 <div class="col-4 col-md-2 mb-4 mb-md-0">
-                    <img src="{{ asset('assets/' . 'client-2.png') }}" alt="Partner 2" class="img-fluid partner-logo">
+                    <img src="{{ asset('assets/' . 'client-2.png') }}" alt="Partner 2"
+                        class="img-fluid partner-logo">
                 </div>
                 <div class="col-4 col-md-2 mb-4 mb-md-0">
-                    <img src="{{ asset('assets/' . 'client-3.png') }}" alt="Partner 3" class="img-fluid partner-logo">
+                    <img src="{{ asset('assets/' . 'client-3.png') }}" alt="Partner 3"
+                        class="img-fluid partner-logo">
                 </div>
                 <div class="col-4 col-md-2 mb-4 mb-md-0">
-                    <img src="{{ asset('assets/' . 'client-4.png') }}" alt="Partner 4" class="img-fluid partner-logo">
+                    <img src="{{ asset('assets/' . 'client-4.png') }}" alt="Partner 4"
+                        class="img-fluid partner-logo">
                 </div>
                 <div class="col-4 col-md-2">
-                    <img src="{{ asset('assets/' . 'client-5.png') }}" alt="Partner 5" class="img-fluid partner-logo">
+                    <img src="{{ asset('assets/' . 'client-5.png') }}" alt="Partner 5"
+                        class="img-fluid partner-logo">
                 </div>
             </div>
         </div>
@@ -342,80 +421,7 @@
         </div>
     </section>
 
-    <!-- Catalog Section -->
-    <section id="portfolio" class="portfolio section py-5">
-        <div class="container section-title mb-5 text-center" data-aos="fade-up">
-            <h2 class="badge bg-primary-light text-primary px-3 py-2 rounded-pill text-uppercase fw-bold fs-6">Galerie
-            </h2>
-            <p class="display-5 mt-3 fw-bold">
-                <span>Visiter&nbsp;</span> <span class="description-title text-primary">Catalogue du mois</span>
-            </p>
-        </div>
-
-        <div class="container">
-            <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
-                <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-                    <div class="col-lg-3 col-md-4 portfolio-item isotope-item filter-product">
-                        <img src="assets/img/masonry-portfolio/1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4 class="fw-bold">Danien</h4>
-                            <p>Propose des modèles pour hommes et femmes, incluant des options 2 en 1 avec des clips
-                                solaires.</p>
-                            <a href="assets/img/masonry-portfolio/1.jpg" title="Product 1"
-                                data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 portfolio-item isotope-item filter-product">
-                        <img src="assets/img/masonry-portfolio/2.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4 class="fw-bold">Product 1</h4>
-                            <p>Lorem ipsum, dolor sit</p>
-                            <a href="assets/img/masonry-portfolio/2.jpg" title="Product 1"
-                                data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 portfolio-item isotope-item filter-product">
-                        <img src="assets/img/masonry-portfolio/3.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4 class="fw-bold">Product 1</h4>
-                            <p>Lorem ipsum, dolor sit</p>
-                            <a href="assets/img/masonry-portfolio/3.jpg" title="Product 1"
-                                data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-4 portfolio-item isotope-item filter-product">
-                        <img src="assets/img/masonry-portfolio/1.jpg" class="img-fluid" alt="">
-                        <div class="portfolio-info">
-                            <h4 class="fw-bold">Danien</h4>
-                            <p>Propose des modèles pour hommes et femmes, incluant des options 2 en 1 avec des clips
-                                solaires.</p>
-                            <a href="assets/img/masonry-portfolio/1.jpg" title="Product 1"
-                                data-gallery="portfolio-gallery-product" class="glightbox preview-link"><i
-                                    class="bi bi-zoom-in"></i></a>
-                            <a href="portfolio-details.html" title="More Details" class="details-link"><i
-                                    class="bi bi-link-45deg"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Additional portfolio items would go here -->
-                    <!-- For brevity, I'm showing just a few, but you would include all 20 items -->
-                </div>
-            </div>
-        </div>
-    </section>
-
+    
     <!-- Contact Section -->
     <section id="contact" class="contact section py-5 bg-light">
         <div class="container section-title mb-5 text-center" data-aos="fade-up">
@@ -592,7 +598,8 @@
 
         <div class="container copyright text-center mt-4 py-4 border-top">
             <p class="mb-0">© <span>Copyright</span> <strong class="px-1 sitename">L'OPTICIEN CREATEUR</strong>
-                <span>Tous les droits réservés!</span></p>
+                <span>Tous les droits réservés!</span>
+            </p>
             <div class="credits">
                 <!-- All the links in the footer should remain intact. -->
                 <!-- You can delete the links only if you've purchased the pro version. -->
@@ -602,21 +609,18 @@
         </div>
     </footer>
 
+ <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <div id="preloader" class="d-flex align-items-center justify-content-center flex-column" data-aos="fade-up">
+        <h1 class="preloader-text">L'OPTICIEN CREATEUR</h1>
+        <div class="spinner mt-3" data-aos="zoom-in"></div>
+    </div>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom JavaScript for animations -->
     <script>
-        // Smooth scroll for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
         // Intersection Observer for fade-in animations
         const observerOptions = {
             threshold: 0.1
@@ -670,6 +674,31 @@
         document.querySelectorAll('.stat-circle').forEach(stat => {
             statsObserver.observe(stat);
         });
+
+          // Back to top button
+      let backtotop = document.querySelector('.scroll-top');
+      if (backtotop) {
+        const toggleBacktotop = () => {
+          if (window.scrollY > 100) {
+            backtotop.classList.add('active');
+          } else {
+            backtotop.classList.remove('active');
+          }
+        };
+        window.addEventListener('load', toggleBacktotop);
+        window.addEventListener('scroll', toggleBacktotop);
+      }
+
+
+
+        let preloader = document.getElementById('preloader');
+        if (preloader) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.remove();
+                }, 1000);
+            });
+        }
     </script>
 </body>
 

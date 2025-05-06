@@ -167,6 +167,96 @@
             }
         }
 
+        /* Animation */
+        @keyframes up-down {
+            0% {
+                transform: translateY(10px);
+            }
+
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animated {
+            animation: up-down 2s ease-in-out infinite alternate-reverse both;
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            overflow: hidden;
+            background-color: #fff;
+            transition: all 0.6s ease-out;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #preloader div {
+            width: 13px;
+            height: 13px;
+            background-color: var(--bs-primary);
+            border-radius: 50%;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+            position: absolute;
+            left: 50%;
+        }
+
+        #preloader div:nth-child(1) {
+            left: calc(50% + 8px);
+            animation: animate-preloader-1 0.6s infinite;
+        }
+
+        #preloader div:nth-child(2) {
+            left: calc(50% + 8px);
+            animation: animate-preloader-2 0.6s infinite;
+        }
+
+        #preloader div:nth-child(3) {
+            left: calc(50% + 32px);
+            animation: animate-preloader-2 0.6s infinite;
+        }
+
+        #preloader div:nth-child(4) {
+            left: calc(50% + 56px);
+            animation: animate-preloader-3 0.6s infinite;
+        }
+
+        @keyframes animate-preloader-1 {
+            0% {
+                transform: scale(0);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes animate-preloader-3 {
+            0% {
+                transform: scale(1);
+            }
+
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes animate-preloader-2 {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(24px, 0);
+            }
+        }
+
         /* Scroll Top */
         .scroll-top {
             position: fixed;
@@ -359,7 +449,7 @@
             <div class="container">
                 <!-- Logo and Brand -->
                 <a href="index.html" class="navbar-brand d-flex align-items-center">
-                    <img src="assets/img/logo1.png" alt="L'OPTICIEN CREATEUR Logo" width="60">
+                    <img src="{{ asset('assets/' . 'logo1.png') }}" alt="L'OPTICIEN CREATEUR Logo" width="60">
                     <span class="h3 mb-0 ms-2 fw-bold">L'OPTICIEN CREATEUR</span>
                 </a>
 
@@ -376,22 +466,95 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/">Acceuil</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="index.html#about">Qui sommes nous?</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
-                            <a class="nav-link" href="./service-details.html">Services</a>
+                            <a class="nav-link" href="/rendez_vous">Rendez-vous</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="produits.html">Produits</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#catalog">Catalogue</a>
-                        </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link" href="index.html#contact">Contact</a>
-                        </li>
+                        </li> --}}
                     </ul>
+                </div>
+
+                {{-- Cart --}}
+                <div class="me-3 d-flex align-items-center">
+                    <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button"
+                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-shopping-cart w-8 h-4" aria-hidden="true"></i> Cart
+                        <span class="badge badge-danger ml-2">{{ count((array) session('cart')) }}</span>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="dropdownMenuButton"
+                        style="max-width: 300px; max-height: 400px; overflow-y: auto;">
+                        @if (session('cart') && count(session('cart')) > 0)
+                            <div class="d-flex justify-content-between border-bottom pb-2 mb-2">
+                                <div>
+                                    <i class="fa fa-shopping-cart"></i> <span
+                                        class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
+                                </div>
+                                @php $total = 0 @endphp
+                                @foreach ((array) session('cart') as $id => $details)
+                                    @php $total += $details['price'] * $details['quantity'] @endphp
+                                @endforeach
+                                <div>
+                                    <p>Total: <span class="text-primary">${{ $total }}</span></p>
+                                </div>
+                            </div>
+
+                            @foreach (session('cart') as $id => $details)
+                                <div class="row cart-detail mb-2">
+                                    <div class="col-3">
+                                        <img src="{{ $details['image'] }}" class="img-fluid rounded" />
+                                    </div>
+                                    <div class="col-9">
+                                        <p class="mb-1 text-truncate">{{ $details['name'] }}</p>
+                                        <span class="text-primary">${{ $details['price'] }}</span>
+                                        <span class="ml-2">x{{ $details['quantity'] }}</span>
+                                        <form action="{{ route('remove.from.cart', $id) }}" method="POST"
+                                            class="mt-1">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+
+                            @if (auth()->check())
+                                <div class="text-center mt-2">
+                                    <a href="cart" class="btn btn-primary w-100">View all</a>
+                                </div>
+                            @else
+                                <p class="text-center text-muted">Please <a href="{{ route('Tologin') }}">log in</a>
+                                    to view all items in your cart.</p>
+                            @endif
+                        @else
+                            <p class="text-center text-muted">Your cart is empty</p>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center">
+                    @guest
+                        <a href="{{ route('Tologin') }}" class="btn btn-outline-primary me-2">Se connecter</a>
+                        <a href="{{ route('Toregister') }}" class="btn btn-primary me-2">S'inscrire</a>
+                    @endguest
+                    @auth
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="/profile">Profil</a></li>
+                                <li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+                            </ul>
+                        </div>
+                    @endauth
                 </div>
             </div>
         </nav>
@@ -422,64 +585,89 @@
                 <!-- Filter Buttons -->
                 <div class="row mb-5" data-aos="fade-up">
                     <div class="col-12 text-center">
-                        <div class="filter-buttons">
-                            <button class="btn filter-button active mx-1 mb-2" data-filter="*">Tous</button>
-                            <button class="btn filter-button mx-1 mb-2" data-filter="lunettes-vue">Lunettes de
-                                Vue</button>
-                            <button class="btn filter-button mx-1 mb-2" data-filter="lunettes-soleil">Lunettes de
-                                Soleil</button>
-                            <button class="btn filter-button mx-1 mb-2" data-filter="lentilles">Lentilles de
-                                Contact</button>
-                            <button class="btn filter-button mx-1 mb-2" data-filter="accessoires">Accessoires</button>
+                        <div class="filter-buttons d-flex justify-content-center">
+                            <form action="/ProduitClient">
+                                @csrf
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->is('ProduitClient') ? 'active' : '' }}"
+                                    data-filter="*">Tous</button>
+                            </form>
+
+                            <form action="/filterPerCategorie" method="POST">
+                                @csrf
+                                <input type="hidden" name="categorie" value="Lunettes de Vue">
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Vue' ? 'active' : '' }}"
+                                    data-filter="lunettes-vue">Lunettes de Vue</button>
+                            </form>
+
+                            <form action="/filterPerCategorie" method="POST">
+                                @csrf
+                                <input type="hidden" name="categorie" value="Lunettes de Soleil">
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de Soleil' ? 'active' : '' }}"
+                                    data-filter="lunettes-soleil">Lunettes de Soleil</button>
+                            </form>
+
+                            <form action="/filterPerCategorie" method="POST">
+                                @csrf
+                                <input type="hidden" name="categorie" value="Lunettes de protection">
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Lunettes de protection' ? 'active' : '' }}"
+                                    data-filter="lentilles">Lunettes de protection</button>
+                            </form>
+
+                            <form action="/filterPerCategorie" method="POST">
+                                @csrf
+                                <input type="hidden" name="categorie" value="Accessoires">
+                                <button type="submit"
+                                    class="btn filter-button mx-1 mb-2 {{ request()->input('categorie') == 'Accessoires' ? 'active' : '' }}"
+                                    data-filter="accessoires">Accessoires</button>
+                            </form>
                         </div>
                     </div>
                 </div>
 
                 <!-- Products Grid -->
                 <div class="row g-4" data-aos="fade-up" data-aos-delay="200">
-                    <!-- Product 1 -->
-                    @foreach($produits as $produit)
-                    <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-vue">
-                        <div class="card product-card h-100 shadow-sm">
-                            <span class="badge bg-primary product-badge">Nouveau</span>
-                            <img src="{{ asset('assets/masonry-portfolio/' . '1.jpg') }}" class="card-img-top"
-                                alt="Lunettes de vue modèle Danien">
-                            <div class="card-body">
-                                <p class="product-category mb-1">Lunettes de Vue</p>
-                                <h5 class="card-title fw-bold">Danien Classic</h5>
-                                <p class="card-text">Monture élégante pour hommes et femmes, avec option 2 en 1
-                                    incluant un clip solaire magnétique.</p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <div class="product-price">
-                                        <span class="old-price">1200 DH</span>
-                                        <span>950 DH</span>
+                    @foreach ($produits as $produit)
+                        <!-- Product 1 -->
+                        <div class="col-lg-3 col-md-4 col-sm-6 product-item lunettes-vue">
+                            <div class="card product-card h-100 shadow-sm">
+                                @if ($produit->created_at->gt(now()->subWeek()))
+                                    <span class="badge bg-primary product-badge">Nouveau</span>
+                                @endif
+                                <img src="{{ $produit->image }}" class="card-img-top"
+                                    alt="Lunettes de vue modèle Danien">
+                                <div class="card-body">
+                                    <p class="product-category mb-1">{{ $produit->categorie->name }}</p>
+                                    <h5 class="card-title fw-bold">{{ $produit->name }}</h5>
+                                    <p class="card-text text-truncate" style="max-width: 100%;">
+                                        {{ $produit->description }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <div class="product-price">
+                                            @if ($produit->promotion)
+                                                <span class="old-price">{{ $produit->prix }} DH</span>
+                                                <span>{{ $produit->promotion }}DH</span>
+                                            @else
+                                                <span>{{ $produit->prix }} DH</span>
+                                            @endif
+                                        </div>
+                                        <a href="/show/{{ $produit->id }}"
+                                            class="btn btn-outline-primary btn-sm">Détails</a>
+                                        <a href="{{ route('add.to.cart', $produit->id) }}"
+                                            class="btn btn-primary btn-sm">panier</a>
+                                        {{-- <a href="" class="btn btn-primary">Add to cart</a> --}}
                                     </div>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">Détails</a>
+
                                 </div>
                             </div>
                         </div>
-                    </div>
                     @endforeach
-                    
                 </div>
-
-                <!-- Pagination -->
                 <div class="row mt-5">
-                    <div class="col-12">
-                        <nav aria-label="Page navigation">
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item disabled">
-                                    <a class="page-link" href="#" tabindex="-1"
-                                        aria-disabled="true">Précédent</a>
-                                </li>
-                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#">Suivant</a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="col-12 d-flex justify-content-start">
+                        {{ $produits->links() }}
                     </div>
                 </div>
             </div>
@@ -581,9 +769,22 @@
 
         <div class="container copyright text-center mt-4 py-4 border-top">
             <p class="mb-0">© <span>Copyright</span> <strong class="px-1 sitename">L'OPTICIEN CREATEUR</strong>
-                <span>Tous les droits réservés!</span></p>
+                <span>Tous les droits réservés!</span>
+            </p>
         </div>
     </footer>
+    <div class="container mx-auto px-4">
+        @if (session('success'))
+            <div class="alert alert-success text-sm font-semibold p-3 rounded-md mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @yield('content')
+    </div>
+
+    {{-- @yield('scripts') --}}
+
 
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
@@ -619,20 +820,20 @@
             /**
              * Easy selector helper function
              */
-            const select = (el, all = false) => {
-                el = el.trim();
+            const select = (className, all = false) => {
+                className = className.trim();
                 if (all) {
-                    return [...document.querySelectorAll(el)];
+                    return [...document.querySelectorAll(className)];
                 } else {
-                    return document.querySelector(el);
+                    return document.querySelector(className);
                 }
             };
 
             /**
              * Easy event listener function
              */
-            const on = (type, el, listener, all = false) => {
-                let selectEl = select(el, all);
+            const on = (type, className, listener, all = false) => {
+                let selectEl = select(className, all);
                 if (selectEl) {
                     if (all) {
                         selectEl.forEach(e => e.addEventListener(type, listener));
@@ -645,54 +846,14 @@
             /**
              * Easy on scroll event listener 
              */
-            const onscroll = (el, listener) => {
-                el.addEventListener('scroll', listener);
+            const onscroll = (className, listener) => {
+                className.addEventListener('scroll', listener);
             };
 
-            /**
-             * Navbar links active state on scroll
-             */
-            let navbarlinks = select('#navbarMain .nav-link', true);
-            const navbarlinksActive = () => {
-                let position = window.scrollY + 200;
-                navbarlinks.forEach(navbarlink => {
-                    if (!navbarlink.hash) return;
-                    let section = select(navbarlink.hash);
-                    if (!section) return;
-                    if (position >= section.offsetTop && position <= (section.offsetTop + section
-                            .offsetHeight)) {
-                        navbarlink.classList.add('active');
-                    } else {
-                        navbarlink.classList.remove('active');
-                    }
-                });
-            };
-            window.addEventListener('load', navbarlinksActive);
-            onscroll(document, navbarlinksActive);
-
-            /**
-             * Toggle .header-scrolled class to #header when page is scrolled
-             */
-            let selectHeader = select('#header');
-            if (selectHeader) {
-                const headerScrolled = () => {
-                    if (window.scrollY > 100) {
-                        document.body.classList.add('scrolled');
-                    } else {
-                        document.body.classList.remove('scrolled');
-                    }
-                };
-                window.addEventListener('load', headerScrolled);
-                onscroll(document, headerScrolled);
-            }
-
-            /**
-             * Back to top button
-             */
             let backtotop = select('.scroll-top');
             if (backtotop) {
                 const toggleBacktotop = () => {
-                    if (window.scrollY > 100) {
+                    if (window.scrollY > 500) {
                         backtotop.classList.add('active');
                     } else {
                         backtotop.classList.remove('active');
@@ -725,55 +886,13 @@
                     mirror: false
                 });
             });
-
-            /**
-             * Initiate Pure Counter 
-             */
-            new PureCounter();
-
-            /**
-             * Initiate glightbox 
-             */
-            const glightbox = GLightbox({
-                selector: '.glightbox'
-            });
-
-            /**
-             * Product filtering
-             */
-            window.addEventListener('load', () => {
-                let productContainer = select('.products .row');
-                if (productContainer) {
-                    let productIsotope = new Isotope(productContainer, {
-                        itemSelector: '.product-item',
-                        layoutMode: 'fitRows'
-                    });
-
-                    let productFilters = select('.filter-buttons .filter-button', true);
-
-                    on('click', '.filter-button', function(e) {
-                        e.preventDefault();
-                        productFilters.forEach(function(el) {
-                            el.classList.remove('active');
-                        });
-                        this.classList.add('active');
-
-                        let filterValue = this.getAttribute('data-filter');
-                        if (filterValue === '*') {
-                            productIsotope.arrange({
-                                filter: '*'
-                            });
-                        } else {
-                            productIsotope.arrange({
-                                filter: `.${filterValue}`
-                            });
-                        }
-                        AOS.refresh();
-                    }, true);
-                }
-            });
+            
 
         })();
+
+
+
+      
     </script>
 </body>
 
